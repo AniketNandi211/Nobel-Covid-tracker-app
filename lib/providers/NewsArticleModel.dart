@@ -27,7 +27,7 @@ class NewsArticleModel with ChangeNotifier {
     notifyListeners();
   }
 
-  // getters
+      // getters
   List<Article> get articles => _articles;
   Fails get fail => _fail;
   bool get isWorking => _state == NewsArticleModelState.working;
@@ -36,9 +36,8 @@ class NewsArticleModel with ChangeNotifier {
 
 
 
-  /*
+
    Future<void> _getArticles() async {
-    List<Article> articles;
     try {
       _fail = null;
       _setArticles(await NewsApiService().loadArticles());
@@ -48,24 +47,6 @@ class NewsArticleModel with ChangeNotifier {
     } catch (e) {
       print('from Article Provider : ${e.toString()}');
     }
-  }
-  */
-
-
-
-
-  Future<List<Article>> _getArticles() async {
-    List<Article> articles;
-    try {
-      _fail = null;
-      articles  = await NewsApiService().loadArticles();
-    } on Fails catch(f) {
-      print('from Article Provider(Fails) : ${f.toString()}');
-      _setFail(f);
-    } catch (e) {
-      print('from Article Provider : ${e.toString()}');
-    }
-    return articles;
   }
 
 

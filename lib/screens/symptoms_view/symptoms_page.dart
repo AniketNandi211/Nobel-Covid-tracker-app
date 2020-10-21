@@ -14,21 +14,24 @@ class SymptomsPage extends StatefulWidget {
 
 class _SymptomsPageState extends State<SymptomsPage> {
 
-  Future<List<Article>> _articlesFuture;
   int _carouselIndex;
 
   @override
   void initState() {
     super.initState();
+    print('making a request');
+    Provider.of<NewsArticleModel>(context, listen: false).loadArticles();
     _carouselIndex = 0;
-    _articlesFuture = NewsApiService().loadArticles();
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
   }
 
   // responsible for displaying news in the carousel slider
   Widget newsViewer(double parentWidth, double parentHeight) {
     NewsArticleModel articleModel = Provider.of<NewsArticleModel>(context, listen: false);
-    //articleModel.loadArticles();
-    //print('calling newsViewer()');
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
@@ -87,7 +90,6 @@ class _SymptomsPageState extends State<SymptomsPage> {
     NewsArticleModel articleModel = Provider.of<NewsArticleModel>(context, listen: false);
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height * 0.35;
-    //print('calling widgetBuild()');
     return Container(
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
