@@ -1,7 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:covid19_tracker/models/Article.dart';
 import 'package:covid19_tracker/providers/NewsArticleModel.dart';
-import 'package:covid19_tracker/services/NewsApiService.dart';
 import 'package:covid19_tracker/widgets/NewsCardList.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +17,6 @@ class _SymptomsPageState extends State<SymptomsPage> {
   @override
   void initState() {
     super.initState();
-    print('making a request');
     Provider.of<NewsArticleModel>(context, listen: false).loadArticles();
     _carouselIndex = 0;
   }
