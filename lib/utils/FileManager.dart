@@ -15,10 +15,10 @@ class FileManager {
   static Future<Directory> get cacheDirectory async => await getTemporaryDirectory();
 
       /// create a file in the given location
-  static File createFile(Directory filePath, String fileName) => new File('${filePath.path}/$fileName');
+  static File createFile({Directory filePath, String fileName}) => new File('${filePath.path}/$fileName');
 
       /// read contents from the file (with given directory and filename)
-  static Future<String> readData(Directory filePath, String fileName) async =>
+  static Future<String> readData({Directory filePath, String fileName}) async =>
       await File('${filePath.path}/$fileName').readAsString();
 
       /// read contents from the file (with given file)
@@ -26,20 +26,28 @@ class FileManager {
       await file.readAsString();
 
       /// write contents onto the file (with given directory, filename and data : String )
-  static Future<File> writeData(Directory filePath, String fileName, String data) async =>
+  static Future<File> writeData({
+    Directory filePath, String fileName, String data}) async =>
       await File('${filePath.path}/$fileName').writeAsString('$data');
 
       /// write contents onto the file (with given file and data : String )
-  static Future<File> writeFileData(File file, String data) async =>
+  static Future<File> writeFileData({File file, String data}) async =>
       await file.writeAsString('$data');
 
       /// delete the file (with given directory and filename)
-  static Future<FileSystemEntity> delete(Directory filePath, String fileName) async =>
+  static Future<FileSystemEntity> delete({
+    Directory filePath, String fileName}) async =>
       await File('${filePath.path}/$fileName').delete();
 
       /// delete the file (with given file)
   static Future<FileSystemEntity> deleteFile(File file) async =>
       await file.delete();
 
+      /// return whether the given file exists or not
+  static Future<bool> doesFileExist(File file) async => await file.exists();
+
+      /// return whether the file (with given directory and filename) exists or not
+  static Future<bool> doesExist({Directory filePath, String fileName}) async =>
+      await File('${filePath.path}/$fileName').exists();
 
 }
