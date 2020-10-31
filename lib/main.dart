@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:covid19_tracker/providers/NewsArticleModel.dart';
 import 'package:covid19_tracker/screens/home_view.dart';
 import 'package:covid19_tracker/services/CacheService.dart';
+import 'package:covid19_tracker/utils/FileManager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +15,6 @@ void main() async{
 
   // Do testing stuff here -->
 
-
   // run the application
   runApp(MyApp());
 }
@@ -22,13 +23,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of my application.
   @override
   Widget build(BuildContext context) {
-
-    // Random initiative testings goes down here -vvv-
-
-    //NewsArticleModel().requestArticles();
-
-    //
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<NewsArticleModel>(
