@@ -40,7 +40,7 @@ class NewsArticleModel with ChangeNotifier {
    Future<void> _getArticles() async {
     try {
       _fail = null;
-      _setArticles(await NewsApiService().loadArticles());
+      //_setArticles(await NewsApiService().loadArticles());
     } on Fails catch(f) {
       print('from Article Provider(Fails) : ${f.toString()}');
       _setFail(f);

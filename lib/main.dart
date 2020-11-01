@@ -14,6 +14,13 @@ void main() async{
 
 
   // Do testing stuff here -->
+  await CacheService.instance;
+  print(await CacheService.testingData);
+  //CacheService.eraseCachedData();
+  //FileManager.delete(filePath: await FileManager.cacheDirectory, fileName: 'news_articles.json')
+    //  .then((value) => print('file deleted'));
+  //FileManager.readData(filePath: await FileManager.cacheDirectory, fileName :'news_articles.json')
+  //.then((value) => print(value));
 
   // run the application
   runApp(MyApp());
