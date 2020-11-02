@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:covid19_tracker/models/CacheFile.dart';
 import 'package:covid19_tracker/utils/FileManager.dart';
-import 'package:flutter/material.dart';
 
 
     /// to identify data type
@@ -14,12 +13,15 @@ class CacheService {
 
   static CacheService _instance;
 
-  static Map<CacheServiceDataType, String> _cacheFileNames = {
+      // Private constructor to prohibit making of an instance of this class
+  CacheService._();
+
+  static final Map<CacheServiceDataType, String> _cacheFileNames = {
     CacheServiceDataType.News : 'news_articles.json',
   };
   static List<CacheFile> _cacheFiles = <CacheFile>[];
+  //static Map<CacheServiceDataType, String> _cacheFiles2 = Map<CacheServiceDataType, String>();
 
-  CacheService._();
 
   static Future<CacheService> get instance async {
     await _initializeCacheFileList();
@@ -42,10 +44,12 @@ class CacheService {
     //print(_cacheFiles[0].fileContents);
   }
 
-  static Future<void> eraseCachedData() async {
-    _cacheFiles.map(
-            (file) async => await file.deleteFile().then((value) => print('deleted ${file.fileName}')));
-  }
+      /// Deletes all cached files and data
+      /// i.e. it clears the App cache
+  static Future<void> eraseCachedData() async =>
+    _cacheFiles.forEach( (CacheFile file) async =>
+        await file.deleteFile().then( (value) => print('deleted ${file.fileName}') ));
+
 
   static get articles async {
     //dajdkajdk

@@ -34,7 +34,7 @@ class CacheFile {
         print('Loaded from cache');
         print(_data);
       } else {
-        _data = await NewsApiService().loadArticles();
+        _data = await NewsApiService.loadArticles(); // API request
         print('loaded from Internet');
         await FileManager.writeFileData(file: _file, data: _data);
         print(_data);
@@ -48,7 +48,7 @@ class CacheFile {
     return json.decode(_data);
   }
 
-
+      /// Deletes the current file
   Future<void> deleteFile() async {
     await FileManager.deleteFile(_file);
   }

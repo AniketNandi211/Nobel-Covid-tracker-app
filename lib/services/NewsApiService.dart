@@ -11,9 +11,12 @@ class NewsApiService {
       // load api_key from env file
   //static final String _newsApiKey = DotEnv().env['NEWS_API_KEY'];
   static final String _newsApiKey = 'fake_key'; // for testing
-  final String _baseUrl = 'http://newsapi.org/v2/top-headlines?country=in&apiKey=$_newsApiKey';
+  static final String _baseUrl = 'http://newsapi.org/v2/top-headlines?country=in&apiKey=$_newsApiKey';
 
-  Future<String> loadArticles() async {
+      // Private constructor to prohibit making of an instance of this class
+  NewsApiService._();
+
+  static Future<String> loadArticles() async {
     //List<Article> _articles = <Article>[];
     //print('News api service running');
     try{
