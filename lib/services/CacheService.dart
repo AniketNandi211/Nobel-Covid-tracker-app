@@ -19,8 +19,7 @@ class CacheService {
   static final Map<CacheServiceDataType, String> _cacheFileNames = {
     CacheServiceDataType.News : 'news_articles.json',
   };
-  static List<CacheFile> _cacheFiles = <CacheFile>[];
-  //static Map<CacheServiceDataType, String> _cacheFiles2 = Map<CacheServiceDataType, String>();
+  static Map<CacheServiceDataType, CacheFile> _cacheFiles = Map<CacheServiceDataType, CacheFile>();
 
 
   static Future<CacheService> get instance async {
@@ -34,27 +33,24 @@ class CacheService {
 
   static Future<void> _initializeCacheFileList() async {
     Directory cacheDir = await FileManager.cacheDirectory;
-    _cacheFiles.add(
-      CacheFile(
-          fileName: _cacheFileNames[CacheServiceDataType.News],
-          dir: cacheDir)
-    );
-    print('cacheFileList length : ${_cacheFileNames.length}');
-    //_cacheFiles[0].fileContents.then((value) => print(value['hey']));
-    //print(_cacheFiles[0].fileContents);
+    _cacheFileNames.forEach( (cacheServiceDataType, _fileName) => _cacheFiles.addAll({cacheServiceDataType : CacheFile(
+      fileName: _fileName,
+      dir: cacheDir,
+    ) }) );
   }
 
-      /// Deletes all cached files and data
+      /// Deletes all cached files' data
       /// i.e. it clears the App cache
   static Future<void> eraseCachedData() async =>
-    _cacheFiles.forEach( (CacheFile file) async =>
-        await file.deleteFile().then( (value) => print('deleted ${file.fileName}') ));
+    _cacheFiles.forEach( (cacheServiceDataType, cacheFile) async =>
+        await cacheFile.deleteFile().then( (_) => print('deleted ${cacheFile.fileName}') ));
 
 
   static get articles async {
     //dajdkajdk
   }
 
-  static Future<Map<String, dynamic>> get testingData async => await _cacheFiles[0].fileContents;
+      ///
+  static Future<Map<String, dynamic>> get testingData async => await _cacheFiles[CacheServiceDataType.News].fileContents;
 
 }

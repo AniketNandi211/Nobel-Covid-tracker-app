@@ -32,12 +32,12 @@ class CacheFile {
       if (await FileManager.doesFileExist(_file)) {
         _data = await FileManager.readFileData(_file);
         print('Loaded from cache');
-        print(_data);
+        //print(_data);
       } else {
         _data = await NewsApiService.loadArticles(); // API request
         print('loaded from Internet');
         await FileManager.writeFileData(file: _file, data: _data);
-        print(_data);
+        //print(_data);
       }
 
     } on Fails catch(fail) {
