@@ -24,20 +24,32 @@ class CacheFile {
     _file = File('${dir.path}/$fileName');
   }
 
+  /// this function writes into cache file
+  Future<void> writeContents(String _data) async =>
+    await FileManager.writeFileData(file: _file, data: _data);
 
-      /// Reads the file and returns data as Map<String, dynamic> if file exists
-  Future<Map<String, dynamic>> get fileContents async {
-    String _data;
+  /// this function reads data from cache file and returns it
+  Future<dynamic> get contents async => await FileManager.readFileData(_file);
+
+
+
+      /// This function : fuck this function
+  /// I'm having a headache
+  /// have to refactor this cuz am also gonna fetch the covid details
+  Future<List<dynamic>> get fileContents async {
     try{
       if (await FileManager.doesFileExist(_file)) {
-        _data = await FileManager.readFileData(_file);
-        print('Loaded from cache');
-        //print(_data);
+        String _data;
+        print('Loading from cache');
+        _data = await FileManager.readFileData(_file).then(
+                (String _fileContents) => json.decode(_fileContents) );
+        return json.decode(_data);
       } else {
-        _data = await NewsApiService.loadArticles(); // API request
-        print('loaded from Internet');
-        await FileManager.writeFileData(file: _file, data: _data);
-        //print(_data);
+        print('Loading from Internet');
+        dynamic jsonData = await NewsApiService.loadArticles(); // API request
+        print(jsonData);
+        if (jsonData != null) await FileManager.writeFileData(file: _file, data: json.encode(jsonData));
+
       }
 
     } on Fails catch(fail) {
@@ -45,15 +57,17 @@ class CacheFile {
     } catch (error) {
       print('from CacheFile class : ${error.toString()}');
     }
-    return json.decode(_data);
+    /** in case of _data is null , returns empty json object {}
+     *  otherwise Runtime Error : getter was called on null occurs
+     *  while parsing the json object ,
+     *  which suppresses any error message thrown by API service
+     *  that should render on screen to tell the user what went wrong
+     */
   }
 
       /// Deletes the current file
   Future<void> deleteFile() async {
     await FileManager.deleteFile(_file);
   }
-
-  File _createCacheFile(Directory dir, String fileName) =>
-       FileManager.createFile(filePath: dir, fileName: fileName);
 
 }

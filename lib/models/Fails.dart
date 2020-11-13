@@ -14,7 +14,7 @@ class Fails {
 
   final int code;
   final String codeName;
-  final String info;
+  String info;
 
   Fails({
     @required this.code,

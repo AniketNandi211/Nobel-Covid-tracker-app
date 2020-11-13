@@ -17,27 +17,26 @@ class NewsApiService {
   NewsApiService._();
 
   static Future<String> loadArticles() async {
-    //List<Article> _articles = <Article>[];
-    //print('News api service running');
-    try{
-      // http.Response response = await http.get(_baseUrl);
-      // dynamic jsonData = json.decode(response.body);
-      // if(jsonData['status'] == 'error'){
-      //   // throw server error if occurs
-      //   throw Fails(
-      //     codeName: 'Internal_Server_Error',
-      //     code: 102,
-      //     info: jsonData['message']
-      //   );
-      // }
-      // else { return jsonData; }
-      return Future.delayed(const Duration(seconds: 1), () => '{"hey":"ANi"}');
+     try{
+    //    http.Response response = await http.get(_baseUrl);
+    //    dynamic jsonData = json.decode(response.body);
+    //    if(jsonData['status'] == 'error'){
+    //      // throw server error if occurs
+    //      throw Fails(
+    //        codeName: 'Internal_Server_Error',
+    //        code: 102,
+    //        info: jsonData['message']
+    //      );
+    //    }
+    //    else { print(jsonData['articles']); return jsonData['articles']; }
+      return Future.delayed(const Duration(seconds: 1), () => '[{"a" : "b", "c" : {"d": "e"}}, {"c" : {"r" : "t"}}]');
     } on SocketException {
       throw Fails.generateFail(FailsType.NoNetwork);
     } on HttpException {
       throw Fails.generateFail(FailsType.BadRequest);
-    } catch (err) {
-      rethrow;
+    } catch (_) {
+      //rethrow;
+      throw Fails.generateFail(FailsType.Unknown).info = _.toString();
     }
   }
 
