@@ -1,5 +1,6 @@
 import 'package:covid19_tracker/models/Fails.dart';
 import 'package:covid19_tracker/models/Article.dart';
+import 'package:covid19_tracker/services/CacheService.dart';
 import 'package:covid19_tracker/services/NewsApiService.dart';
 import 'package:flutter/foundation.dart';
 
@@ -27,6 +28,14 @@ class NewsArticleModel with ChangeNotifier {
     notifyListeners();
   }
 
+  /// convert raw json object to dart Article object
+  List<Article> _convertFromJsonToArticle(List<dynamic> jsonData) {
+    List<Article> articles = <Article>[];
+    //print(jsonData);
+    jsonData.forEach((articleJson) => articles.add(Article.withJson(articleJson)));
+    return articles;
+  }
+
       // getters
   List<Article> get articles => _articles;
   Fails get fail => _fail;
@@ -38,14 +47,20 @@ class NewsArticleModel with ChangeNotifier {
 
 
    Future<void> _getArticles() async {
+     await CacheService.instance;
     try {
       _fail = null;
-      //_setArticles(await NewsApiService().loadArticles());
+      List<dynamic> articleJsonData = await CacheService.articles;
+      //print(articleJsonData.map((dataSet) => print(dataSet['source']['name'])));
+      if(articleJsonData != null) {
+        _setArticles(_convertFromJsonToArticle(articleJsonData));
+      }
     } on Fails catch(f) {
       print('from Article Provider(Fails) : ${f.toString()}');
       _setFail(f);
     } catch (e) {
       print('from Article Provider : ${e.toString()}');
+      _setFail(Fails.generateFail(FailsType.Unknown)..info = e.toString());
     }
   }
 

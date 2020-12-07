@@ -31,14 +31,14 @@ class Article{
 
   factory Article.withJson(Map<String, dynamic> jsonData){
     return Article(
-      sourceName: jsonData['source']['name'],
-      author: jsonData['author'],
-      title: jsonData['title'],
-      desc: jsonData['description'],
-      content: jsonData['url'],
-      imgUrl: jsonData['urlToImage'],
-      pageUrl: jsonData['publishedAt'],
-      publishDate: jsonData['content']
+      sourceName: jsonData['source']['name'] ?? 'n/a',
+      author: jsonData['author'] ?? 'n/a',
+      title: jsonData['title'] ?? 'n/a',
+      desc: jsonData['description'] ?? 'n/a',
+      content: jsonData['url'] ?? 'n/a',
+      imgUrl: jsonData['urlToImage'] ?? 'n/a',
+      pageUrl: jsonData['publishedAt'] ?? 'n/a',
+      publishDate: jsonData['content' ?? 'n/a']
     );
   }
 

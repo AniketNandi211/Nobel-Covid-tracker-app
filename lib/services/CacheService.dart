@@ -55,33 +55,30 @@ class CacheService {
     try {
       if (await FileManager.doesFileExist(_articleFile)) {
         print('Loaded from cache ');
-        /** decoding the cached data two times
-         *  first time : To convert from String file content to
-         *  List of String key : String value pair
-         *  second time : to convert from List object to Dart Map<String, dynamic>
+
+        /**
+         * Getting the data as String from file then converting it into
+         * Map<String, dynamic>
          */
-        return _cacheFiles[CacheServiceDataType.News].contents.then((data) => json.decode(json.decode(data)));
+
+        return _cacheFiles[CacheServiceDataType.News].contents.then((data) => json.decode(data));
       } else {
-        dynamic jsonData = await NewsApiService.loadArticles(); // API request
-        print('Loaded from internet - $jsonData');
-          // json.encode converts the Map<String, dynamic> to String data
+        List<dynamic> jsonData = await NewsApiService.loadArticles(); // API request
+        print('Loaded from internet');
+
+        /** json.encode converts the Map<String, dynamic> to String data
+         * So converting decoded data to write into file in order to access it
+         * later as Cache storage
+         */
+
         if (jsonData != null) _cacheFiles[CacheServiceDataType.News].writeContents(json.encode(jsonData));
-        return json.decode(jsonData);
+        // simply return the already decoded data -> Map<String, dynamic>
+        return jsonData;
       }
     } on Fails catch(fail) {
       print('from CacheFile service(Fails) : ${fail.toString()}');
     } catch (error) {
       print('from CacheFile service : ${error.toString()}');
-    }
-  }
-
-  
-  static Future<List<dynamic>> get testingData async {
-  try {
-    return await _cacheFiles[CacheServiceDataType.News].fileContents;
-  } catch (error) {
-    //throw Fails.generateFail(FailsType.Unknown).info = error.toString();
-    print('error from CS : ${error.toString()}');
     }
   }
 

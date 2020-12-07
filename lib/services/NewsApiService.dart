@@ -9,33 +9,40 @@ import 'package:http/http.dart' as http;
 
 class NewsApiService {
       // load api_key from env file
-  //static final String _newsApiKey = DotEnv().env['NEWS_API_KEY'];
-  static final String _newsApiKey = 'fake_key'; // for testing
+  static final String _newsApiKey = DotEnv().env['NEWS_API_KEY'];
+  //static final String _newsApiKey = 'fake_key'; // for testing
   static final String _baseUrl = 'http://newsapi.org/v2/top-headlines?country=in&apiKey=$_newsApiKey';
 
       // Private constructor to prohibit making of an instance of this class
   NewsApiService._();
 
-  static Future<String> loadArticles() async {
+  /**
+   * by default http.Response returns data as String
+   * then decoding that data to Map<String, dynamic format>
+   *   to use for further operations
+   */
+
+  ///  Returns list of articles -> List<Articles>
+  static Future<List<dynamic>> loadArticles() async {
      try{
-    //    http.Response response = await http.get(_baseUrl);
-    //    dynamic jsonData = json.decode(response.body);
-    //    if(jsonData['status'] == 'error'){
-    //      // throw server error if occurs
-    //      throw Fails(
-    //        codeName: 'Internal_Server_Error',
-    //        code: 102,
-    //        info: jsonData['message']
-    //      );
-    //    }
-    //    else { print(jsonData['articles']); return jsonData['articles']; }
-      return Future.delayed(const Duration(seconds: 1), () => '[{"a" : "b", "c" : {"d": "e"}}, {"c" : {"r" : "t"}}]');
+       http.Response response = await http.get(_baseUrl);
+       dynamic jsonData = json.decode(response.body);
+       if(jsonData['status'] == 'error'){
+         // throw server error if occurs
+         throw Fails(
+           codeName: 'Internal_Server_Error',
+           code: 102,
+           info: jsonData['message']
+         );
+       }
+       else { print(jsonData['articles'].runtimeType); return jsonData['articles']; }
+      //return Future.delayed(const Duration(seconds: 1), () => '[{"a" : "b", "c" : {"d": "e"}}, {"c" : {"r" : "t"}}]');
     } on SocketException {
       throw Fails.generateFail(FailsType.NoNetwork);
     } on HttpException {
       throw Fails.generateFail(FailsType.BadRequest);
     } catch (_) {
-      //rethrow;
+      // rethrow;
       throw Fails.generateFail(FailsType.Unknown).info = _.toString();
     }
   }
