@@ -1,5 +1,4 @@
 import 'package:covid19_tracker/models/Article.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -84,12 +83,14 @@ class NewsCard extends StatelessWidget {
                     Text(
                       article.title,
                       style: TextStyle(fontSize: 20),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 8,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        Text(article.author ?? 'null'),
+                        Text(article.publishDate),
                         SizedBox(width: 8,),
                         Container(
                           decoration: BoxDecoration(
@@ -100,7 +101,7 @@ class NewsCard extends StatelessWidget {
                           width: 6,
                         ),
                         SizedBox(width: 8,),
-                        Text(article.sourceName ?? 'null')
+                        Text(article.sourceName)
                       ],
                     ),
                   ],
@@ -110,6 +111,5 @@ class NewsCard extends StatelessWidget {
           ,);
       },
     );
-    
   }
 }

@@ -28,6 +28,7 @@ dependencies:
   provider: ^4.1.1
   bottom_navy_bar: ^5.4.0
   font_awesome_flutter: ^8.8.1
+  material_design_icons_flutter: 4.0.5755
   carousel_slider: ^2.1.0
   http: ^0.12.2
   path_provider: ^1.6.21

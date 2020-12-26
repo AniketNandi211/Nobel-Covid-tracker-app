@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 import 'package:covid19_tracker/models/Fails.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:covid19_tracker/models/Article.dart';
 import 'package:http/http.dart' as http;
 
 class NewsApiService {

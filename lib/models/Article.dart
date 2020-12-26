@@ -35,10 +35,10 @@ class Article{
       author: jsonData['author'] ?? 'n/a',
       title: jsonData['title'] ?? 'n/a',
       desc: jsonData['description'] ?? 'n/a',
-      content: jsonData['url'] ?? 'n/a',
+      content: jsonData['content'] ?? 'n/a',
       imgUrl: jsonData['urlToImage'] ?? 'n/a',
-      pageUrl: jsonData['publishedAt'] ?? 'n/a',
-      publishDate: jsonData['content' ?? 'n/a']
+      pageUrl: jsonData['url'] ?? 'n/a',
+      publishDate: jsonData['publishedAt' ?? 'n/a']
     );
   }
 

@@ -1,19 +1,17 @@
-import 'dart:io';
 import 'package:covid19_tracker/providers/NewsArticleModel.dart';
 import 'package:covid19_tracker/screens/home_view.dart';
-import 'package:covid19_tracker/services/CacheService.dart';
-import 'package:covid19_tracker/utils/FileManager.dart';
+import 'package:covid19_tracker/services/CovidService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'models/Fails.dart';
 
 void main() async{
   // Load all env variables
   await DotEnv().load('.env');
 
-
   // Do testing stuff here -->
+  CovidService.countriesCovidData;
+
 
   // run the application
   runApp(MyApp());

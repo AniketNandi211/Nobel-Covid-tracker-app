@@ -21,19 +21,19 @@ class _HomeViewState extends State<HomeView> {
   final List<BottomNavyBarItem> bottomNavBarItems = [
     BottomNavyBarItem(
       icon: Icon(FontAwesomeIcons.virus),
-      title: Text('Symptoms'),
+      title: Text('Feeds'),
       inactiveColor: Colors.green[600].withOpacity(0.6),
       activeColor: Colors.green[600]
     ),
     BottomNavyBarItem(
       icon: Icon(FontAwesomeIcons.building),
-      title: Text('Countries'),
+      title: Text('CountryWise'),
       inactiveColor: Colors.orange[800].withOpacity(0.6),
       activeColor: Colors.orange[800]
     ),
     BottomNavyBarItem(
       icon: Icon(FontAwesomeIcons.globeAsia),
-      title: Text('Feeds'),
+      title: Text('Worldwide'),
       inactiveColor: Colors.blue.withOpacity(0.6),
       activeColor: Colors.blue
     ),
@@ -45,7 +45,7 @@ class _HomeViewState extends State<HomeView> {
     ),
     BottomNavyBarItem(
       icon: Icon(FontAwesomeIcons.history),
-      title: Text('History'),
+      title: Text('Insights'),
       inactiveColor: Colors.teal.withOpacity(0.6),
       activeColor: Colors.teal
     ),
@@ -73,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: PageView(
         controller: _pageController,
-        //physics: BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         children: <Widget>[
           SymptomsPage(),
           CountryPage(),

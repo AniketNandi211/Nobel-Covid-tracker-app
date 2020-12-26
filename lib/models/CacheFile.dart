@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:covid19_tracker/services/NewsApiService.dart';
 import 'package:covid19_tracker/utils/FileManager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

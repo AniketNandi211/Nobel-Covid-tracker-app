@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:covid19_tracker/providers/NewsArticleModel.dart';
+import 'package:covid19_tracker/widgets/GlobalCovidCard.dart';
 import 'package:covid19_tracker/widgets/NewsCardList.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +33,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
-        //padding: EdgeInsets.all(0),
-        //color: Colors.grey,
+        // color: Colors.grey,
         child: Consumer<NewsArticleModel>(
           builder: (context, articleModel, __) {
             if(!articleModel.isReady) {
@@ -50,33 +50,20 @@ class _SymptomsPageState extends State<SymptomsPage> {
                   items: NewsCardList(articles: articleModel.articles)
                       .newsCardList,
                   options: CarouselOptions(
-                      autoPlay: true,
+                    scrollPhysics: BouncingScrollPhysics(),
+                      autoPlay: false,
                       autoPlayCurve: Curves.easeInOut,
-                      autoPlayInterval: const Duration(milliseconds: 1800),
+                      autoPlayInterval: const Duration(milliseconds: 2000),
                       initialPage: _carouselIndex,
                       viewportFraction: 0.8,
                       aspectRatio: 16 / 9,
                       enlargeCenterPage: true,
-                      enableInfiniteScroll: false
+                      enableInfiniteScroll: false,
                   ),
                 );
               }
             }
           },
-          child: CarouselSlider(
-            // children items
-            items: NewsCardList(articles: articleModel.articles).newsCardList,
-            options: CarouselOptions(
-              autoPlay: true,
-              autoPlayCurve: Curves.easeInOut,
-              autoPlayInterval: const Duration(milliseconds: 1800),
-              initialPage: _carouselIndex,
-              viewportFraction: 0.8,
-              aspectRatio: 16/9,
-              enlargeCenterPage: true,
-              enableInfiniteScroll: false,
-            ),
-          ),
         ),
       ),
     );
@@ -97,20 +84,18 @@ class _SymptomsPageState extends State<SymptomsPage> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 12,left: 12.0),
-                child: InkWell(
-                    onTap: () {
-                      articleModel.requestNewArticles();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Latest News',
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal : 6.0,
+                      vertical: 2.0
+                  ),
+                  child: Text(
+                    '@ Feeds',
+                    style: TextStyle(fontSize: 22),
+                  ),
                 ),
               ),
-              SizedBox(height: 12,),
+              SizedBox(height: 4,),
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
@@ -118,6 +103,20 @@ class _SymptomsPageState extends State<SymptomsPage> {
                   height: _height,
                   child: newsViewer(_width, _height),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0, top: 6.0),
+                child: Text(
+                  '@ Covid updates',
+                  style: TextStyle(fontSize: 22),
+                ),
+              ),
+              SizedBox(height: 20.0,),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                ),
+                child: GlobalCovidCard(),
               ),
             ],
           ),
