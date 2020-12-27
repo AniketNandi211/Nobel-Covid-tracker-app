@@ -91,7 +91,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
                   ),
                   child: Text(
                     '@ Feeds',
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 22,),
                   ),
                 ),
               ),
@@ -111,7 +111,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
                   style: TextStyle(fontSize: 22),
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(height: 16.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10.0,

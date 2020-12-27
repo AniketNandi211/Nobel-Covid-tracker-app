@@ -10,7 +10,7 @@ void main() async{
   await DotEnv().load('.env');
 
   // Do testing stuff here -->
-  CovidService.countriesCovidData;
+  print(await CovidService.globalCovidData);
 
 
   // run the application
