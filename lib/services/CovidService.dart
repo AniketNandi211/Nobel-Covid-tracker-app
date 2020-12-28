@@ -24,7 +24,7 @@ class CovidService {
   }
 
   static Future<Map<String, dynamic>> getCountryCovidData(String country) async {
-    http.Response data = await http.get('${_baseDataByCountry}country');
+    http.Response data = await http.get('$_baseDataByCountry$country');
     Map<String, dynamic> jsonData =  json.decode(data.body);
     return jsonData;
   }

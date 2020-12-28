@@ -1,3 +1,4 @@
+import 'package:covid19_tracker/providers/CovidDataModel.dart';
 import 'package:covid19_tracker/providers/NewsArticleModel.dart';
 import 'package:covid19_tracker/screens/home_view.dart';
 import 'package:covid19_tracker/services/CovidService.dart';
@@ -10,7 +11,6 @@ void main() async{
   await DotEnv().load('.env');
 
   // Do testing stuff here -->
-  print(await CovidService.globalCovidData);
 
 
   // run the application
@@ -25,7 +25,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<NewsArticleModel>(
           create: (context) => NewsArticleModel(),
-        )
+        ),
+        ChangeNotifierProvider<CovidDataModel>(
+          create: (context) => CovidDataModel(),
+        ),
       ],
       child: MaterialApp(
         title: 'Covid-19 tracker and News',

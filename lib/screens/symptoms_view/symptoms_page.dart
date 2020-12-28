@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:covid19_tracker/providers/CovidDataModel.dart';
 import 'package:covid19_tracker/providers/NewsArticleModel.dart';
 import 'package:covid19_tracker/widgets/GlobalCovidCard.dart';
 import 'package:covid19_tracker/widgets/NewsCardList.dart';
@@ -19,6 +20,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
   void initState() {
     super.initState();
     Provider.of<NewsArticleModel>(context, listen: false).loadArticles();
+    Provider.of<CovidDataModel>(context, listen: false).globalData;
     _carouselIndex = 0;
   }
 
@@ -29,11 +31,9 @@ class _SymptomsPageState extends State<SymptomsPage> {
 
   // responsible for displaying news in the carousel slider
   Widget newsViewer(double parentWidth, double parentHeight) {
-    NewsArticleModel articleModel = Provider.of<NewsArticleModel>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
-        // color: Colors.grey,
         child: Consumer<NewsArticleModel>(
           builder: (context, articleModel, __) {
             if(!articleModel.isReady) {
@@ -71,7 +71,6 @@ class _SymptomsPageState extends State<SymptomsPage> {
 
   @override
   Widget build(BuildContext context) {
-    NewsArticleModel articleModel = Provider.of<NewsArticleModel>(context, listen: false);
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height * 0.35;
     return Container(
@@ -116,7 +115,14 @@ class _SymptomsPageState extends State<SymptomsPage> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10.0,
                 ),
-                child: GlobalCovidCard(),
+                child: Consumer<CovidDataModel>(
+                    builder: (context, covidDataModel, _) {
+                      if(!covidDataModel.isGlobalCovidDataReady){
+                        return Center(child: CircularProgressIndicator(),);
+                      } else {
+                        return GlobalCovidCard(globalCovidData: covidDataModel.globalCovidData,);
+                      }
+                    }),
               ),
             ],
           ),

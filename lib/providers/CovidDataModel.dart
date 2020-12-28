@@ -34,9 +34,12 @@ class CovidDataModel extends ChangeNotifier {
 
   // getters
       // for maintaining state
-  CountriesCovidDataState get countriesCovidDataState => _countriesCovidDataState;
-  GlobalCovidDataState get globalCovidDataState => _globalCovidDataState;
-  CountryCovidDataState get countryCovidDataState => _countryCovidDataState;
+  bool get isCountriesCovidDataReady =>
+      _countriesCovidDataState == CountriesCovidDataState.ready;
+  bool get isGlobalCovidDataReady =>
+      _globalCovidDataState == GlobalCovidDataState.ready;
+  bool get isCountryCovidDataReady =>
+      _countryCovidDataState == CountryCovidDataState.ready;
       // data(s)
   GlobalCovidData get globalCovidData => _globalCovidData;
   CountryCovidData get countryCovidData => _countryCovidData;
@@ -51,7 +54,9 @@ class CovidDataModel extends ChangeNotifier {
   }
 
   void _setGlobalCovidDataState(GlobalCovidDataState currentState) {
+    print(_globalCovidDataState);
     _globalCovidDataState = currentState;
+    print(_globalCovidDataState);
     notifyListeners();
   }
 
@@ -63,6 +68,7 @@ class CovidDataModel extends ChangeNotifier {
 
   void _setGlobalCovidData(GlobalCovidData globalCovidData) {
     _globalCovidData = globalCovidData;
+    notifyListeners();
   }
 
   void _setCountriesCovidData(List<CountryCovidData> countriesCovidData) {
@@ -81,16 +87,18 @@ class CovidDataModel extends ChangeNotifier {
   // data getters through CovidService
 
   Future<void> get globalData async {
-    _setGlobalCovidDataState(GlobalCovidDataState.working);
     _fails = null;
     try {
+      //_setGlobalCovidDataState(GlobalCovidDataState.working);
       Map<String, dynamic> globalData = await CovidService.globalCovidData;
       _setGlobalCovidData(GlobalCovidData.withJson(globalData));
       _setGlobalCovidDataState(GlobalCovidDataState.ready);
     } on Fails catch(fail) {
       _setFails(fail);
+      if(_debug) print('From GlobalCovidDataModel Fails : ${fail.codeName} $fail');
     } catch (e) {
       _setFails(Fails.generateFail(FailsType.Unknown)..info = e.toString());
+      if(_debug) print('From GlobalCovidDataModel error : $e');
     }
   }
 
@@ -107,8 +115,10 @@ class CovidDataModel extends ChangeNotifier {
       _setCountriesCovidDataState(CountriesCovidDataState.ready);
     } on Fails catch(fail) {
       _setFails(fail);
+      if(_debug) print('From CovidDataModel Fails : ${fail.codeName} $fail');
     } catch (e) {
       _setFails(Fails.generateFail(FailsType.Unknown)..info = e.toString());
+      if(_debug) print('From CovidDataModel error : $e');
     }
   }
 

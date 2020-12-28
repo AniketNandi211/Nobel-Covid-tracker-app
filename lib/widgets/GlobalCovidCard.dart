@@ -1,9 +1,15 @@
+import 'package:covid19_tracker/models/GlobalCovidData.dart';
+import 'package:covid19_tracker/utils/NumberScaleFormatter.dart';
 import 'package:covid19_tracker/widgets/GlobalCovidStatViewer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class GlobalCovidCard extends StatelessWidget {
+
+  final GlobalCovidData globalCovidData;
+
+  GlobalCovidCard({@required this.globalCovidData});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +30,7 @@ class GlobalCovidCard extends StatelessWidget {
                     ),
                     SizedBox(width: 6.0,),
                     Text(
-                      '12 Million',
+                      NumberScaleFormatter.adjustScaling(globalCovidData.totalConfirmed),
                       style: TextStyle(
                           fontSize: 26.0,
                           fontWeight: FontWeight.w600,
@@ -50,19 +56,19 @@ class GlobalCovidCard extends StatelessWidget {
                 children: [
                   GlobalCovidStatViewer(
                     statName: 'Recovered',
-                    numberInfo: '244 Billion',
+                    numberInfo: NumberScaleFormatter.adjustScaling(globalCovidData.totalRecovery),
                     icon: MdiIcons.heartPlusOutline,
                     cardColor: Colors.green,
                   ),
                   GlobalCovidStatViewer(
                     statName: 'Deceased',
-                    numberInfo: '892 Million',
+                    numberInfo: NumberScaleFormatter.adjustScaling(globalCovidData.totalDeath),
                     icon: MdiIcons.emoticonDeadOutline,
                     cardColor: Colors.red,
                   ),
                  GlobalCovidStatViewer(
                    statName: 'Being treated',
-                   numberInfo: '34 Trillion',
+                   numberInfo: NumberScaleFormatter.adjustScaling(globalCovidData.activeCases),
                    cardColor : Colors.orange,
                    icon: MdiIcons.bottleTonicPlusOutline,
                  ),

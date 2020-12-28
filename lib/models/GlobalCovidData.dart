@@ -22,13 +22,13 @@ class GlobalCovidData {
 
   factory GlobalCovidData.withJson(Map<String, dynamic> jsonData) {
     return GlobalCovidData(
-      dailyConfirmed: jsonData['todayCases'] ?? '-',
-      dailyDeath: jsonData['todayDeaths'] ?? '-',
-      dailyRecovery: jsonData['todayRecovered'] ?? '-',
-      totalConfirmed: jsonData['cases'] ?? '-',
-      totalDeath: jsonData['deaths'] ?? '-',
-      totalRecovery: jsonData['recovered'] ?? '-',
-      activeCases: jsonData['active'] ?? '-'
+      dailyConfirmed: jsonData['todayCases']?.toString() ?? '-',
+      dailyDeath: jsonData['todayDeaths']?.toString() ?? '-',
+      dailyRecovery: jsonData['todayRecovered']?.toString() ?? '-',
+      totalConfirmed: jsonData['cases']?.toString() ?? '-',
+      totalDeath: jsonData['deaths']?.toString() ?? '-',
+      totalRecovery: jsonData['recovered']?.toString() ?? '-',
+      activeCases: jsonData['active']?.toString() ?? '-'
     );
   }
 

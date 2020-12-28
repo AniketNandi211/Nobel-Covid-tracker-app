@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// takes Stat info text, number info,
-/// icondata and glow color
+/// IconData and card color
 class GlobalCovidStatViewer extends StatelessWidget {
 
   final String statName;
@@ -42,7 +42,7 @@ class GlobalCovidStatViewer extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               letterSpacing: 0.0,
-              fontSize: 18.0,
+              fontSize: 16.0,
             ),
           ),
           SizedBox(height: 4.0,),
