@@ -1,7 +1,6 @@
 import 'package:covid19_tracker/models/Fails.dart';
 import 'package:covid19_tracker/models/Article.dart';
 import 'package:covid19_tracker/services/CacheService.dart';
-import 'package:covid19_tracker/services/NewsApiService.dart';
 import 'package:flutter/foundation.dart';
 
 enum NewsArticleModelState {
@@ -43,9 +42,6 @@ class NewsArticleModel with ChangeNotifier {
   bool get isReady => _state == NewsArticleModelState.ready;
   bool get hasFail => _fail != null;
 
-
-
-
    Future<void> _getArticles() async {
      await CacheService.instance;
     try {
@@ -63,7 +59,6 @@ class NewsArticleModel with ChangeNotifier {
       _setFail(Fails.generateFail(FailsType.Unknown)..info = e.toString());
     }
   }
-
 
   Future<void> loadArticles() async {
     await _getArticles();

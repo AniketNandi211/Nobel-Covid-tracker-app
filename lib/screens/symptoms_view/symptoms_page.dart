@@ -20,7 +20,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
   void initState() {
     super.initState();
     Provider.of<NewsArticleModel>(context, listen: false).loadArticles();
-    Provider.of<CovidDataModel>(context, listen: false).globalData;
+    Provider.of<CovidDataModel>(context, listen: false).fetchGlobalData();
     _carouselIndex = 0;
   }
 

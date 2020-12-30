@@ -54,9 +54,7 @@ class CovidDataModel extends ChangeNotifier {
   }
 
   void _setGlobalCovidDataState(GlobalCovidDataState currentState) {
-    print(_globalCovidDataState);
     _globalCovidDataState = currentState;
-    print(_globalCovidDataState);
     notifyListeners();
   }
 
@@ -86,13 +84,13 @@ class CovidDataModel extends ChangeNotifier {
 
   // data getters through CovidService
 
-  Future<void> get globalData async {
+  // ignore: missing_return
+  Future<GlobalCovidData> _globalData() async {
     _fails = null;
     try {
       //_setGlobalCovidDataState(GlobalCovidDataState.working);
       Map<String, dynamic> globalData = await CovidService.globalCovidData;
-      _setGlobalCovidData(GlobalCovidData.withJson(globalData));
-      _setGlobalCovidDataState(GlobalCovidDataState.ready);
+      return GlobalCovidData.withJson(globalData);
     } on Fails catch(fail) {
       _setFails(fail);
       if(_debug) print('From GlobalCovidDataModel Fails : ${fail.codeName} $fail');
@@ -102,8 +100,20 @@ class CovidDataModel extends ChangeNotifier {
     }
   }
 
-  Future<void> get countriesData async {
-    _setCountriesCovidDataState(CountriesCovidDataState.working);
+  Future<void> fetchGlobalData() async {
+    _setGlobalCovidData(await _globalData());
+    _setGlobalCovidDataState(GlobalCovidDataState.ready);
+  }
+
+  Future<void> refreshGlobalData() async {
+    _setGlobalCovidDataState(GlobalCovidDataState.working);
+    _setGlobalCovidData(await _globalData());
+    _setGlobalCovidDataState(GlobalCovidDataState.ready);
+  }
+
+
+  // ignore: missing_return
+  Future<List<CountryCovidData>> _countriesData() async {
     List<CountryCovidData> countriesCovidDataList = <CountryCovidData>[];
     _fails = null;
     try {
@@ -111,8 +121,7 @@ class CovidDataModel extends ChangeNotifier {
       countriesJsonList.forEach((countryCovidJson) {
         countriesCovidDataList.add(CountryCovidData.withJson(countryCovidJson));
       });
-      _setCountriesCovidData(countriesCovidDataList);
-      _setCountriesCovidDataState(CountriesCovidDataState.ready);
+      return countriesCovidDataList;
     } on Fails catch(fail) {
       _setFails(fail);
       if(_debug) print('From CovidDataModel Fails : ${fail.codeName} $fail');
@@ -122,13 +131,23 @@ class CovidDataModel extends ChangeNotifier {
     }
   }
 
-  Future<void> get countryData async {
-    _setCountryCovidDataState(CountryCovidDataState.working);
+  Future<void> fetchCountriesData() async {
+    _setCountriesCovidData(await _countriesData());
+    _setCountriesCovidDataState(CountriesCovidDataState.ready);
+  }
+
+  Future<void> refreshCountriesData() async {
+    _setCountriesCovidDataState(CountriesCovidDataState.working);
+    _setCountriesCovidData(await _countriesData());
+    _setCountriesCovidDataState(CountriesCovidDataState.ready);
+  }
+
+  // ignore: missing_return
+  Future<CountryCovidData> _countryData() async {
     _fails = null;
     try {
       Map<String, dynamic> countryCovidData = await CovidService.getCountryCovidData('india');
-      _setCountryCovidData(CountryCovidData.withJson(countryCovidData));
-      _setCountryCovidDataState(CountryCovidDataState.working);
+      return CountryCovidData.withJson(countryCovidData);
     } on Fails catch(fail) {
       _setFails(fail);
       if(_debug) print('From CovidDataModel Fails : ${fail.codeName} $fail');
@@ -136,6 +155,17 @@ class CovidDataModel extends ChangeNotifier {
       _setFails(Fails.generateFail(FailsType.Unknown)..info = e.toString());
       if(_debug) print('From CovidDataModel error : $e');
     }
+  }
+
+  Future<void> fetchCountryData() async {
+    _setCountryCovidData(await _countryData());
+    _setCountryCovidDataState(CountryCovidDataState.ready);
+  }
+
+  Future<void> refreshCountryData() async {
+    _setCountryCovidDataState(CountryCovidDataState.working);
+    _setCountryCovidData(await _countryData());
+    _setCountryCovidDataState(CountryCovidDataState.ready);
   }
 
 }
