@@ -30,11 +30,31 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Covid-19 tracker and News',
+        title: 'Covid-19 App',
         theme: ThemeData(
           primarySwatch: Colors.teal,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          brightness: Brightness.dark
+          brightness: Brightness.dark,
+          primaryTextTheme: TextTheme(
+            headline1: TextStyle(
+                color: Colors.white
+            ),
+            headline2: TextStyle(
+                color: Colors.white
+            ),
+            headline3: TextStyle(
+                color: Colors.white
+            ),
+            headline4: TextStyle(
+                color: Colors.white
+            ),
+            headline5: TextStyle(
+                color: Colors.white
+            ),
+            headline6: TextStyle(
+              color: Colors.white
+            ),
+        )
         ),
         home: HomeView(),
       ),

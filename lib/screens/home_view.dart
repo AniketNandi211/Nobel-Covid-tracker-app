@@ -67,6 +67,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text('Covid-19 Tracker'),
         centerTitle: true,

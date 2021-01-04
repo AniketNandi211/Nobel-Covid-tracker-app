@@ -46,7 +46,6 @@ class CovidDataModel extends ChangeNotifier {
   List<CountryCovidData> get countriesCovidDataList => _countriesCovidDataList;
   Fails get fail => _fails;
 
-
   // setters
   void _setCountriesCovidDataState(CountriesCovidDataState currentState) {
     _countriesCovidDataState = currentState;
@@ -62,7 +61,6 @@ class CovidDataModel extends ChangeNotifier {
     _countryCovidDataState = currentState;
     notifyListeners();
   }
-
 
   void _setGlobalCovidData(GlobalCovidData globalCovidData) {
     _globalCovidData = globalCovidData;
@@ -82,7 +80,7 @@ class CovidDataModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // data getters through CovidService
+      // data getters through CovidService
 
   // ignore: missing_return
   Future<GlobalCovidData> _globalData() async {

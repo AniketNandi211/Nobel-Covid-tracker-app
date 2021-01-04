@@ -20,7 +20,7 @@ class NumberScaleFormatter {
     if(number.length <= 3)
       return number;
     else if(number.length > 3 && number.length <= 6)
-      return '${(_divideBy(int.parse(number), _tenthScale(_tenthScaleMap['kudos']))).substring(0, 3)} K';
+      return '${(_divideBy(int.parse(number), _tenthScale(_tenthScaleMap['kudos']))).substring(0, 3)}K';
     else if(number.length > 6 && number.length <= 9)
       return '${(_divideBy(int.parse(number), _tenthScale(_tenthScaleMap['million']))).substring(0, 4)} Million';
     else if(number.length > 9 && number.length <= 12)

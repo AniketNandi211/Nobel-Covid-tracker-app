@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 class GlobalCovidStatViewer extends StatelessWidget {
 
   final String statName;
-  final String numberInfo;
+  final String totalNumberInfo;
+  final String dailyNumberInfo;
   final IconData icon;
   final MaterialColor cardColor;
 
   GlobalCovidStatViewer({
     @required this.icon,
-    @required this.numberInfo,
+    @required this.totalNumberInfo,
     @required this.statName,
+    @required this.dailyNumberInfo,
     this.cardColor = Colors.teal,
   });
 
@@ -21,6 +23,14 @@ class GlobalCovidStatViewer extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
+        // boxShadow: [
+        //   BoxShadow(
+        //     offset: Offset(2, 2),
+        //     color: cardColor.shade900,
+        //     blurRadius: 8.0,
+        //     spreadRadius: 1.0
+        //   )
+        // ],
         gradient: LinearGradient(
           colors: [cardColor.shade300, cardColor.shade600, cardColor.shade900],
           begin: Alignment.topLeft,
@@ -38,12 +48,20 @@ class GlobalCovidStatViewer extends StatelessWidget {
           ),
           SizedBox(height: 8.0,),
           Text(
-            numberInfo,
+            totalNumberInfo,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               letterSpacing: 0.0,
               fontSize: 16.0,
             ),
+          ),
+          SizedBox(height: 4.0,),
+          Text(
+            '(+$dailyNumberInfo today)',
+              style: TextStyle(
+                fontSize: 12.0,
+                fontWeight: FontWeight.bold,
+              )
           ),
           SizedBox(height: 4.0,),
           Text(

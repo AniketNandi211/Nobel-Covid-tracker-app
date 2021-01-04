@@ -33,7 +33,7 @@ class NewsApiService {
            info: jsonData['message']
          );
        }
-       else { print(jsonData['articles'].runtimeType); return jsonData['articles']; }
+       else { return jsonData['articles']; }
       //return Future.delayed(const Duration(seconds: 1), () => '[{"a" : "b", "c" : {"d": "e"}}, {"c" : {"r" : "t"}}]');
     } on SocketException {
       throw Fails.generateFail(FailsType.NoNetwork);

@@ -1,5 +1,14 @@
 import 'package:flutter/foundation.dart';
 
+/// holds Global Covid details
+/// totalConfirmed
+/// totalDeath
+/// totalRecovery
+/// dailyConfirmed
+/// dailyDeath
+/// dailyRecovery
+/// activeCases
+
 class GlobalCovidData {
 
   final String totalConfirmed;
