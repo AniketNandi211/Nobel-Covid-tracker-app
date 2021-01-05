@@ -20,58 +20,61 @@ class GlobalCovidStatViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        // boxShadow: [
-        //   BoxShadow(
-        //     offset: Offset(2, 2),
-        //     color: cardColor.shade900,
-        //     blurRadius: 8.0,
-        //     spreadRadius: 1.0
-        //   )
-        // ],
-        gradient: LinearGradient(
-          colors: [cardColor.shade300, cardColor.shade600, cardColor.shade900],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 3.5,),
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 4),
+              color: cardColor.shade900,
+              blurRadius: 5.0,
+              spreadRadius: 0.1
+            )
+          ],
+          gradient: LinearGradient(
+            colors: [cardColor.shade300, cardColor.shade600, cardColor.shade900],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16.0)
         ),
-        borderRadius: BorderRadius.circular(16.0)
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center, // default : center
-        children: [
-          Icon(
-            icon,
-            size: 42,
-          ),
-          SizedBox(height: 8.0,),
-          Text(
-            totalNumberInfo,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              letterSpacing: 0.0,
-              fontSize: 16.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center, // default : center
+          children: [
+            Icon(
+              icon,
+              size: 42,
             ),
-          ),
-          SizedBox(height: 4.0,),
-          Text(
-            '(+$dailyNumberInfo today)',
+            SizedBox(height: 8.0,),
+            Text(
+              totalNumberInfo,
               style: TextStyle(
-                fontSize: 12.0,
                 fontWeight: FontWeight.bold,
-              )
-          ),
-          SizedBox(height: 4.0,),
-          Text(
-            statName,
-            style: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.bold,
+                letterSpacing: 0.0,
+                fontSize: 16.0,
+              ),
             ),
-          ),
-        ],
+            SizedBox(height: 4.0,),
+            Text(
+              '(+$dailyNumberInfo today)',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.bold,
+                )
+            ),
+            SizedBox(height: 4.0,),
+            Text(
+              statName,
+              style: TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

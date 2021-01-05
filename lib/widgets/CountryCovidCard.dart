@@ -26,7 +26,7 @@ class CountryCovidCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(width: 4,),
                 ClipRRect(
@@ -34,8 +34,8 @@ class CountryCovidCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(18),
                   child: Container(
                     color: Colors.grey.shade800,
-                    height: 40,
-                    width: 65,
+                    height: 35,
+                    width: 60,
                     child: Image.network(
                       countryCovidData.countryFlagUrl,
                         color: Colors.white.withOpacity(0.3),
@@ -58,19 +58,21 @@ class CountryCovidCard extends StatelessWidget {
                   ),
                 ),
                 Spacer(),
-                CircleAvatar(
-                  foregroundColor: Colors.transparent,
+                InkWell(
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                  splashColor: Colors.yellowAccent.withOpacity(0.4),
+                  onTap: () {
+                    // let's not do anything
+                  },
                   child: Icon(
                     Icons.star_border_rounded,
                     size: 28,
                     color: Colors.yellowAccent,
                   ),
-                  radius: 20,
-                  backgroundColor: Colors.transparent,
                 )
               ],
             ),
-            SizedBox(height: 4,),
+            SizedBox(height: 6,),
             Divider(
               thickness: 1.0,
               color: Colors.grey,

@@ -69,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       // backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Covid-19 Tracker'),
+        title: Text('Covid-19'),
         centerTitle: true,
       ),
       body: PageView(
@@ -95,8 +95,8 @@ class _HomeViewState extends State<HomeView> {
           onItemSelected: (int index){
             setState(() {
               _currentPage = index;
-              _pageController.jumpToPage(index);
             });
+            _pageController.jumpToPage(index);
           }
       )
     );

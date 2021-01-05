@@ -49,7 +49,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
               } else {
                 return CarouselSlider(
                   // children items
-                  items: NewsCardList(articles: articleModel.articles)
+                  items: NewsCardList(articles: articleModel.articles, context: context)
                       .newsCardList,
                   options: CarouselOptions(
                     scrollPhysics: BouncingScrollPhysics(),
@@ -75,102 +75,100 @@ class _SymptomsPageState extends State<SymptomsPage> {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height * 0.35;
-    return Container(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 12,left: 12.0),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal : 6.0,
-                      vertical: 2.0
-                  ),
-                  child: Text(
-                    'Feeds',
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                  ),
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      physics: BouncingScrollPhysics(),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 12,left: 12.0),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal : 6.0,
+                    vertical: 2.0
                 ),
-              ),
-              SizedBox(height: 4,),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  width: _width,
-                  height: _height,
-                  child: newsViewer(_width, _height),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0, top: 6.0),
                 child: Text(
-                  'Covid updates',
+                  'Feeds',
                   style: Theme.of(context).primaryTextTheme.headline4,
                 ),
               ),
-              SizedBox(height: 16.0,),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                ),
-                child: Consumer<CovidDataModel>(
-                    builder: (context, covidDataModel, _) {
-                      if(!covidDataModel.isGlobalCovidDataReady){
-                        return SizedBox(
-                          height: 200,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      } else {
-                        return GlobalCovidCard(globalCovidData: covidDataModel.globalCovidData,);
-                      }
-                    }),
+            ),
+            SizedBox(height: 4,),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                width: _width,
+                height: _height,
+                child: newsViewer(_width, _height),
               ),
-              SizedBox(height: 16.0,),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  'Most affected countries',
-                  style: Theme.of(context).primaryTextTheme.headline6,
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0, top: 6.0),
+              child: Text(
+                'Covid updates',
+                style: Theme.of(context).primaryTextTheme.headline4,
               ),
-              Container(
-                margin: const EdgeInsets.all(12.0),
-                child: Consumer<CovidDataModel>(
+            ),
+            SizedBox(height: 16.0,),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+              ),
+              child: Consumer<CovidDataModel>(
                   builder: (context, covidDataModel, _) {
-                    if(!covidDataModel.isCountriesCovidDataReady){
+                    if(!covidDataModel.isGlobalCovidDataReady){
                       return SizedBox(
-                          height: 200,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                        height: 200,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       );
                     } else {
-                        // sort countries by most affected attribute
-                      covidDataModel.countriesCovidDataList.sort(
-                          (a, b) => int.parse(b.totalConfirmed).compareTo(int.parse(a.totalConfirmed))
-                      );
-                      return ListView.builder(
-                        shrinkWrap: true,   // to extent the list inside a column
-                        physics: NeverScrollableScrollPhysics(), // to disable ListView.builder scrollable
-                        itemCount: 20,
-                          itemBuilder: (BuildContext context,int index) {
-                            return CountryCovidCard(countryCovidData: covidDataModel.countriesCovidDataList[index]);
-                          }
-                      );
+                      return GlobalCovidCard(globalCovidData: covidDataModel.globalCovidData,);
                     }
+                  }),
+            ),
+            SizedBox(height: 16.0,),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                'Most affected countries',
+                style: Theme.of(context).primaryTextTheme.headline6,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(12.0),
+              child: Consumer<CovidDataModel>(
+                builder: (context, covidDataModel, _) {
+                  if(!covidDataModel.isCountriesCovidDataReady){
+                    return SizedBox(
+                        height: 200,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                    );
+                  } else {
+                      // sort countries by most affected attribute
+                    covidDataModel.countriesCovidDataList.sort(
+                        (a, b) => int.parse(b.totalConfirmed).compareTo(int.parse(a.totalConfirmed))
+                    );
+                    return ListView.builder(
+                      shrinkWrap: true,   // to extent the list inside a column
+                      physics: NeverScrollableScrollPhysics(), // to disable ListView.builder scrollable
+                      itemCount: 5,
+                        itemBuilder: (BuildContext context,int index) {
+                          return CountryCovidCard(countryCovidData: covidDataModel.countriesCovidDataList[index]);
+                        }
+                    );
                   }
-                ),
-              )
-            ],
-          ),
+                }
+              ),
+            )
+          ],
         ),
-      )
+      ),
     );
   }
 }

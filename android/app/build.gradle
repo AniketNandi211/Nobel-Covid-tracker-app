@@ -34,6 +34,7 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
+        checkReleaseBuilds false //<- for disabling new release checks
     }
 
     defaultConfig {

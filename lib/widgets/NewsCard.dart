@@ -50,7 +50,6 @@ class NewsCard extends StatelessWidget {
 
   final Article article;
 
-  //mock data
   NewsCard({@required this.article});
 
   @override
@@ -60,14 +59,13 @@ class NewsCard extends StatelessWidget {
         //debugPrint('width: ${boxConstraints.maxHeight} height : ${boxConstraints.maxWidth}');
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadius.circular(2),
           ),
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              //color: Colors.blueAccent,
               image: DecorationImage(
                 image: NetworkImage(article.imgUrl,),
                 fit: BoxFit.cover,
@@ -77,34 +75,59 @@ class NewsCard extends StatelessWidget {
             ),
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      article.title,
-                      style: TextStyle(fontSize: 20),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 8,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Text(article.publishDate),
-                        SizedBox(width: 8,),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(3)),
-                            color: Colors.white,
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Hero(
+                        tag: article.title,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: Text(
+                            article.title,
+                            style: TextStyle(fontSize: 20),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          height: 6,
-                          width: 6,
                         ),
-                        SizedBox(width: 8,),
-                        Text(article.sourceName)
-                      ],
-                    ),
-                  ],
+                      ),
+                      SizedBox(height: 8,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Hero(
+                            tag: article.publishDate,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Text(
+                                  article.publishDate
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8,),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(3)),
+                              color: Colors.white,
+                            ),
+                            height: 6,
+                            width: 6,
+                          ),
+                          SizedBox(width: 8,),
+                          Hero(
+                            tag: article.sourceName,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Text(
+                                  article.sourceName,
+
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
             )
           )
