@@ -49,8 +49,9 @@ import 'package:flutter/widgets.dart';
 class NewsCard extends StatelessWidget {
 
   final Article article;
+  final int index;
 
-  NewsCard({@required this.article});
+  NewsCard({@required this.article, @required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,7 @@ class NewsCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Hero(
-                        tag: article.title,
+                        tag: '$index : ${article.title}',
                         child: Material(
                           color: Colors.transparent,
                           child: Text(
@@ -96,7 +97,7 @@ class NewsCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           Hero(
-                            tag: article.publishDate,
+                            tag: '$index : ${article.publishDate}',
                             child: Material(
                               color: Colors.transparent,
                               child: Text(
@@ -115,12 +116,11 @@ class NewsCard extends StatelessWidget {
                           ),
                           SizedBox(width: 8,),
                           Hero(
-                            tag: article.sourceName,
+                            tag: '$index : ${article.sourceName}',
                             child: Material(
                               color: Colors.transparent,
                               child: Text(
                                   article.sourceName,
-
                               ),
                             ),
                           ),

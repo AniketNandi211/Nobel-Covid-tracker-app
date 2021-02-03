@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class NewsViewer extends StatelessWidget {
 
   final Article article;
+  final int index;
 
-  NewsViewer({@required this.article});
+  NewsViewer({@required this.article, @required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class NewsViewer extends StatelessWidget {
               Row(
                 children: [
                   Hero(
-                    tag: article.sourceName,
+                    tag: '$index : ${article.sourceName}',
                     child: Material(
                       child: Text(
                         article.sourceName,
@@ -47,7 +48,7 @@ class NewsViewer extends StatelessWidget {
               ),
               SizedBox(height: 20,),
               Hero(
-                tag: article.title,
+                tag: '$index : ${article.title}',
                 child: Material(
                   color: Colors.transparent,
                   child: Text(
@@ -60,7 +61,7 @@ class NewsViewer extends StatelessWidget {
               ),
               SizedBox(height: 20,),
               Text(
-                article.content.split('[')[0],
+                article.content == 'n/a' ? 'No content available' : article.content.split('[')[0],
                 softWrap: true,
                 style: Theme.of(context).primaryTextTheme.headline6,
               ),
@@ -69,17 +70,15 @@ class NewsViewer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Hero(
-                    tag: article.publishDate,
+                    tag: '$index : ${article.publishDate}',
                     child: Material(
                       color: Colors.transparent,
                       child: Text(
                           article.publishDate
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ),],
+              ),],
           )
         ),
       ),
