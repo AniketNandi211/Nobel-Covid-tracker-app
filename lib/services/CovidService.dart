@@ -9,6 +9,10 @@ class CovidService {
   static final String _baseAllCountryDataUrl = 'https://corona.lmao.ninja/v2/countries?sort=country';
   static final String _baseDataByCountry = 'https://corona.lmao.ninja/v2/countries/';
 
+  // https://api.covid19api.com/$country?from=$from&to=$to endpoint
+  // datetime must be in 2021
+  static final String _baseCountryCovidTimeStampedDataUrl = 'https://api.covid19api.com/';
+
   CovidService._privateConstructor();
 
   static Future<Map<String, dynamic>> get globalCovidData async {
