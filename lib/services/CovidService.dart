@@ -9,9 +9,8 @@ class CovidService {
   static final String _baseAllCountryDataUrl = 'https://corona.lmao.ninja/v2/countries?sort=country';
   static final String _baseDataByCountry = 'https://corona.lmao.ninja/v2/countries/';
 
-  // https://api.covid19api.com/$country?from=$from&to=$to endpoint
-  // datetime must be in 2021
-  static final String _baseCountryCovidTimeStampedDataUrl = 'https://api.covid19api.com/';
+  // https://corona.lmao.ninja/v2/historical/:country?lastdays=30 endpoint default is 30
+  static final String _baseCountryCovidTimeStampedDataUrl = 'https://corona.lmao.ninja/v2/historical/';
 
   CovidService._privateConstructor();
 
@@ -31,6 +30,12 @@ class CovidService {
     http.Response data = await http.get('$_baseDataByCountry$country');
     Map<String, dynamic> jsonData =  json.decode(data.body);
     return jsonData;
+  }
+
+  static Future<void> getCountryTimeSeriesData(String country, int days) async {
+    http.Response data = await http.get('$_baseCountryCovidTimeStampedDataUrl$country?lastdays=$days');
+    dynamic dataset = json.decode(data.body);
+    print('time series data ${dataset['timeline']['cases']}');
   }
 
 }

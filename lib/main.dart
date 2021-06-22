@@ -1,6 +1,7 @@
 import 'package:covid19_tracker/providers/CovidDataModel.dart';
 import 'package:covid19_tracker/providers/NewsArticleModel.dart';
 import 'package:covid19_tracker/screens/home_view.dart';
+import 'package:covid19_tracker/services/CovidService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ void main() async{
   await DotEnv().load('.env');
 
   // Do testing stuff here -->
+  CovidService.getCountryTimeSeriesData('india', 10);
 
 
   // run the application

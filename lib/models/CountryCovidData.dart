@@ -36,5 +36,4 @@ class CountryCovidData {
         countryFlagUrl: jsonData['countryInfo']['flag'] ?? null
     );
   }
-
 }

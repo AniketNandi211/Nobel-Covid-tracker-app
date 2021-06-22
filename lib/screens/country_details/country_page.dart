@@ -4,7 +4,7 @@ class CountryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Text('hajshdjksa'),
+      child: Text('Country page'),
     );
   }
 }
