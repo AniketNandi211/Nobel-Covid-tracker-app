@@ -11,8 +11,6 @@ void main() async{
   await DotEnv().load('.env');
 
   // Do testing stuff here -->
-  CovidService.getCountryTimeSeriesData('india', 10);
-
 
   // run the application
   runApp(MyApp());

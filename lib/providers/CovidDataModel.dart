@@ -5,17 +5,15 @@ import 'package:covid19_tracker/services/CovidService.dart';
 import 'package:flutter/foundation.dart';
 
 /// keeps track of Countries' covid data state
-enum CountriesCovidDataState {
-  working, ready
-}
+enum CountriesCovidDataState { working, ready }
 /// keeps track of Global covid data state
 enum GlobalCovidDataState {
   working, ready
 }
 /// keeps track of an individual Country covid data state
-enum CountryCovidDataState {
-  working, ready
-}
+enum CountryCovidDataState { working, ready }
+/// keeps track of CountryCovidTimeSeries dataset
+ // left to do
 
 class CovidDataModel extends ChangeNotifier {
 

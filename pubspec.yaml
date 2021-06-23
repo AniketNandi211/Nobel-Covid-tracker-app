@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^0.5.7+1
-  fl_chart: ^0.12.2
+  charts_flutter: ^0.10.0
   provider: ^4.1.1
   bottom_navy_bar: ^5.4.0
   font_awesome_flutter: ^8.8.1

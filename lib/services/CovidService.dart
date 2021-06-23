@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-/// Data(s) are fetched from NovelCOVID API (github.com/NovelCOVID/API)
-
 class CovidService {
 
   static final String _baseGlobalDataUrl = 'https://corona.lmao.ninja/v2/all';
@@ -32,10 +30,9 @@ class CovidService {
     return jsonData;
   }
 
-  static Future<void> getCountryTimeSeriesData(String country, int days) async {
+  static Future<Map<String, dynamic>> getCountryTimeSeriesData(String country, int days) async {
     http.Response data = await http.get('$_baseCountryCovidTimeStampedDataUrl$country?lastdays=$days');
-    dynamic dataset = json.decode(data.body);
-    print('time series data ${dataset['timeline']['cases']}');
+    return json.decode(data.body);
   }
 
 }
