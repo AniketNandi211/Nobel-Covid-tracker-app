@@ -1,15 +1,39 @@
 import 'package:flutter/foundation.dart';
 
+enum SeriesType {
+  infection, dead, recovered
+}
 
 class SeriesData {
+  SeriesType type;
   DateTime date;
   int caseCount;
 
-  SeriesData({@required this.caseCount, @required this.date});
+  SeriesData({@required this.caseCount, @required this.date, @required this.type});
 
-  static void withData(Map<String, dynamic> data){
+  static List<SeriesData> generateSeriesData(Map<String, dynamic> dataset, SeriesType type) {
 
+    List<SeriesData> seriesData = <SeriesData>[];
+
+    // API data arrives in mm/dd/yy format
+    // have to convert it into yyyy/mm/dd format in order to
+    //  work with Series Data (casting to DateTime object)
+    dataset.forEach((key, value) {
+      List<String> dateKey = key.split('/');
+      // int.parse('dateKey[2]')  ->> 0021 year so,
+      // int.parse('20${dateKey[2]}') ->> 2021 year
+      DateTime date = DateTime(int.parse('20${dateKey[2]}'), int.parse(dateKey[0]),
+          int.parse(dateKey[1]));
+      seriesData.add(
+        SeriesData(caseCount: value, date: date, type: type)
+      );
+    });
+    return seriesData;
   }
+
+  // factory SeriesData.buildSeriesObjectFromJson(Map<String, dynamic> data){
+  //
+  // }
 
 }
 
@@ -49,12 +73,12 @@ class CountryCovidTimeSeriesData {
 
  // data members
   String country;
-  Map<String, dynamic> caseSeries;
-  Map<String, dynamic> deathSeries;
-  Map<String, dynamic> recoverSeries;
+  List<SeriesData> infectionSeries;
+  List<SeriesData> deathSeries;
+  List<SeriesData> recoverSeries;
 
   CountryCovidTimeSeriesData({
-   @required this.caseSeries,
+   @required this.infectionSeries,
    @required this.country,
    @required this.deathSeries,
    @required this.recoverSeries
@@ -63,12 +87,9 @@ class CountryCovidTimeSeriesData {
   factory CountryCovidTimeSeriesData.withJsonData(Map<String, dynamic> jsonData) =>
     CountryCovidTimeSeriesData(
     country: jsonData['country'],
-    caseSeries: jsonData['timeline']['cases'],
-    deathSeries: jsonData['timeline']['deaths'],
-    recoverSeries: jsonData['timeline']['recovered']
+    infectionSeries: SeriesData.generateSeriesData(jsonData['timeline']['cases'], SeriesType.infection),
+    deathSeries: SeriesData.generateSeriesData(jsonData['timeline']['deaths'], SeriesType.dead),
+    recoverSeries: SeriesData.generateSeriesData(jsonData['timeline']['recovered'], SeriesType.recovered)
    );
-
-
-  // factory generator
 
  }

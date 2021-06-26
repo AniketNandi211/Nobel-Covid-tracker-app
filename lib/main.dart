@@ -1,3 +1,4 @@
+import 'package:covid19_tracker/models/CountryCovidTimeSeriesData.dart';
 import 'package:covid19_tracker/providers/CovidDataModel.dart';
 import 'package:covid19_tracker/providers/NewsArticleModel.dart';
 import 'package:covid19_tracker/screens/home_view.dart';
@@ -12,8 +13,6 @@ void main() async{
 
   // Do testing stuff here -->
 
-  // run the application
-  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

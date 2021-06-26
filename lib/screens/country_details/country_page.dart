@@ -17,14 +17,7 @@ class SubsGrowth {
 ];
 
 class CountryPage extends StatelessWidget {
-
-  // static final List<SubsGrowth> dataset = [
-  //   SubsGrowth(DateTime(2000, 4, 12), 12),
-  //   SubsGrowth(DateTime(2000, 5, 20), 32),
-  //   SubsGrowth(DateTime(2000, 6, 20), 43),
-  //   SubsGrowth(DateTime(2000, 7, 20), 87),
-  //   SubsGrowth(DateTime(2001, 1, 20), 120),
-  // ];
+  
 
   final List<charts.Series<SubsGrowth, DateTime>> seriesList = [
   charts.Series<SubsGrowth, DateTime>(
