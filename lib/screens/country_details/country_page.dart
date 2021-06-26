@@ -1,6 +1,8 @@
+import 'package:covid19_tracker/providers/CovidDataModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:provider/provider.dart';
 
 class SubsGrowth {
   final int subs;
@@ -16,22 +18,34 @@ class SubsGrowth {
   SubsGrowth(DateTime(2001, 1, 20), 9873124),
 ];
 
-class CountryPage extends StatelessWidget {
-  
+
+class CountryPage extends StatefulWidget {
+  @override
+  _CountryPageState createState() => _CountryPageState();
+}
+
+class _CountryPageState extends State<CountryPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<CovidDataModel>(context, listen: false).fetchTimeSeriesData('india', 3);
+  }
 
   final List<charts.Series<SubsGrowth, DateTime>> seriesList = [
-  charts.Series<SubsGrowth, DateTime>(
-    id: 'subs growth',
-    data: dataset,
-    domainFn: (SubsGrowth subs, __) => subs.date,
-    measureFn: (SubsGrowth subs, __) => subs.subs,
-    colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-    displayName: 'Growth',
-  )
+    charts.Series<SubsGrowth, DateTime>(
+      id: 'subs growth',
+      data: dataset,
+      domainFn: (SubsGrowth subs, __) => subs.date,
+      measureFn: (SubsGrowth subs, __) => subs.subs,
+      colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+      displayName: 'Growth',
+    )
   ];
 
   @override
   Widget build(BuildContext context) {
+    CovidDataModel model = Provider.of<CovidDataModel>(context, listen: false);
     return Column(
       children: [
         Container(
@@ -49,10 +63,10 @@ class CountryPage extends StatelessWidget {
                   }
               )
             ],
-    ),
+          ),
         ),
+        Text('${model.isTimeSeriesDataReady}')
       ],
     );
   }
 }
-

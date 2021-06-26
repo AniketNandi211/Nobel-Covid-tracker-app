@@ -1,4 +1,5 @@
 import 'package:covid19_tracker/models/CountryCovidData.dart';
+import 'package:covid19_tracker/models/CountryCovidTimeSeriesData.dart';
 import 'package:covid19_tracker/models/Fails.dart';
 import 'package:covid19_tracker/models/GlobalCovidData.dart';
 import 'package:covid19_tracker/services/CovidService.dart';
@@ -7,12 +8,11 @@ import 'package:flutter/foundation.dart';
 /// keeps track of Countries' covid data state
 enum CountriesCovidDataState { working, ready }
 /// keeps track of Global covid data state
-enum GlobalCovidDataState {
-  working, ready
-}
+enum GlobalCovidDataState { working, ready }
 /// keeps track of an individual Country covid data state
 enum CountryCovidDataState { working, ready }
 /// keeps track of CountryCovidTimeSeries dataset
+enum TimeSeriesDataState { working, ready }
  // left to do
 
 class CovidDataModel extends ChangeNotifier {
@@ -24,10 +24,12 @@ class CovidDataModel extends ChangeNotifier {
   CountriesCovidDataState _countriesCovidDataState = CountriesCovidDataState.working;
   GlobalCovidDataState _globalCovidDataState = GlobalCovidDataState.working;
   CountryCovidDataState _countryCovidDataState = CountryCovidDataState.working;
+  TimeSeriesDataState _timeSeriesDataState = TimeSeriesDataState.working;
       // data(s)
   GlobalCovidData _globalCovidData;
   List<CountryCovidData> _countriesCovidDataList;
   CountryCovidData _countryCovidData;
+  CountryCovidTimeSeriesData _countryCovidTimeSeriesData;
   Fails _fails;
 
   // getters
@@ -38,10 +40,13 @@ class CovidDataModel extends ChangeNotifier {
       _globalCovidDataState == GlobalCovidDataState.ready;
   bool get isCountryCovidDataReady =>
       _countryCovidDataState == CountryCovidDataState.ready;
+  bool get isTimeSeriesDataReady =>
+      _timeSeriesDataState == TimeSeriesDataState.ready;
       // data(s)
   GlobalCovidData get globalCovidData => _globalCovidData;
   CountryCovidData get countryCovidData => _countryCovidData;
   List<CountryCovidData> get countriesCovidDataList => _countriesCovidDataList;
+  CountryCovidTimeSeriesData get countryTimeSeriesData => _countryCovidTimeSeriesData;
   Fails get fail => _fails;
 
   // setters
@@ -65,12 +70,21 @@ class CovidDataModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _setTimeSeriesDataState(TimeSeriesDataState state){
+    _timeSeriesDataState = state;
+    notifyListeners();
+  }
+
   void _setCountriesCovidData(List<CountryCovidData> countriesCovidData) {
     _countriesCovidDataList = countriesCovidData;
   }
 
   void _setCountryCovidData(CountryCovidData countryCovidData) {
     _countryCovidData = countryCovidData;
+  }
+
+  void _setCountryTimeSeriesData(CountryCovidTimeSeriesData countryCovidTimeSeriesData){
+    _countryCovidTimeSeriesData = countryCovidTimeSeriesData;
   }
 
   void _setFails(Fails fails) {
@@ -162,6 +176,33 @@ class CovidDataModel extends ChangeNotifier {
     _setCountryCovidDataState(CountryCovidDataState.working);
     _setCountryCovidData(await _countryData());
     _setCountryCovidDataState(CountryCovidDataState.ready);
+  }
+
+  Future<CountryCovidTimeSeriesData> _timeSeriesData(String country, int days) async{
+    _fails = null;
+    try {
+      Map<String, dynamic> countryCovidData = await CovidService.getCountryTimeSeriesData(
+        country, days
+      );
+      return CountryCovidTimeSeriesData.withJsonData(countryCovidData);
+    } on Fails catch(fail) {
+      _setFails(fail);
+      if(_debug) print('From CovidDataModel Fails : ${fail.codeName} $fail');
+    } catch (e) {
+      _setFails(Fails.generateFail(FailsType.Unknown)..info = e.toString());
+      if(_debug) print('From CovidDataModel error : $e');
+    }
+  }
+
+  Future<void> fetchTimeSeriesData(String country, int days) async {
+    _setCountryTimeSeriesData(await _timeSeriesData(country, days));
+    _setTimeSeriesDataState(TimeSeriesDataState.ready);
+  }
+
+  Future<void> refreshTimeSeriesData(String country, int days) async {
+    _setTimeSeriesDataState(TimeSeriesDataState.working);
+    _setCountryTimeSeriesData(await _timeSeriesData(country, days));
+    _setTimeSeriesDataState(TimeSeriesDataState.ready);
   }
 
 }
