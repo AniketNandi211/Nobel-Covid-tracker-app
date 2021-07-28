@@ -13,7 +13,6 @@ enum GlobalCovidDataState { working, ready }
 enum CountryCovidDataState { working, ready }
 /// keeps track of CountryCovidTimeSeries dataset
 enum TimeSeriesDataState { working, ready }
- // left to do
 
 class CovidDataModel extends ChangeNotifier {
 
@@ -178,6 +177,7 @@ class CovidDataModel extends ChangeNotifier {
     _setCountryCovidDataState(CountryCovidDataState.ready);
   }
 
+  // ignore: missing_return
   Future<CountryCovidTimeSeriesData> _timeSeriesData(String country, int days) async{
     _fails = null;
     try {
