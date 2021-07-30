@@ -1,3 +1,4 @@
+import 'package:covid19_tracker/providers/ChartSeriesDataProvider.dart';
 import 'package:covid19_tracker/providers/CovidDataModel.dart';
 import 'package:covid19_tracker/providers/NewsArticleModel.dart';
 import 'package:covid19_tracker/screens/home_view.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<CovidDataModel>(
           create: (context) => CovidDataModel(),
         ),
+        ChangeNotifierProvider<ChartSeriesDataProvider>(
+          create: (context) => ChartSeriesDataProvider(),
+        )
       ],
       child: MaterialApp(
         title: 'Covid-19 App',
