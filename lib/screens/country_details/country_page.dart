@@ -16,8 +16,8 @@ class CountryPage extends StatefulWidget {
 
 class _CountryPageState extends State<CountryPage> {
 
-  // int chartSeriesMinScale, chartSeriesMaxScale;
-  bool _selected = false;
+  List<String> _locations = ['India', 'US', "Canada"];
+  String _location;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _CountryPageState extends State<CountryPage> {
     charts.Color chartLineColor;
     if(index == 0) {
       series = chartsData.countryTimeSeriesData.infectionSeries;
-      chartLineColor = charts.ColorUtil.fromDartColor(Colors.deepOrange);
+      chartLineColor = charts.ColorUtil.fromDartColor(Colors.orange);
     }
     else if (index == 1) {
       series = chartsData.countryTimeSeriesData.deathSeries;
@@ -52,29 +52,6 @@ class _CountryPageState extends State<CountryPage> {
     ];
   }
 
-  // List<int> _buildListFromSeries(List<SeriesData> series){
-  //   List<int> list = [];
-  //   series.forEach(
-  //           (seriesData) {
-  //             list.add(seriesData.caseCount);
-  //           });
-  //   return list;
-  // }
-
-  // charts.NumericExtents chartsNumberScaleExtent(CovidDataModel model) {
-  //   int min = minInLists(
-  //     [buildListFromSeries(model.countryTimeSeriesData.deathSeries),
-  //      buildListFromSeries(model.countryTimeSeriesData.recoverSeries),
-  //      buildListFromSeries(model.countryTimeSeriesData.infectionSeries)]
-  //   );
-  //   int max = maxInLists(
-  //       [buildListFromSeries(model.countryTimeSeriesData.deathSeries),
-  //         buildListFromSeries(model.countryTimeSeriesData.recoverSeries),
-  //         buildListFromSeries(model.countryTimeSeriesData.infectionSeries)]
-  //   );
-  //   print('$min, $max');
-  //   return charts.NumericExtents(min, max);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,18 +59,54 @@ class _CountryPageState extends State<CountryPage> {
     ChartSeriesDataProvider chartsData = Provider.of<ChartSeriesDataProvider>(context, listen: false);
     return Column(
       children: [
+        SizedBox(height: 8,),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SizedBox(width: 12,),
+            Text(
+                'Overview',
+              style: TextStyle(
+                fontSize: 24
+              ),
+            ),
+            Expanded(
+              flex: 2, child: Container(),
+            ),
+            DropdownButton(
+              icon: Icon(
+                Icons.location_on
+              ),
+              underline: SizedBox(),
+              dropdownColor: Colors.redAccent,
+              value: _location,
+              items: _locations.map(
+                      (String location) => DropdownMenuItem(
+                        value: location, child: Text(location)
+                      )
+              ).toList(),
+              onChanged: (String selectedLocation){
+                  _location = selectedLocation;
+                  setState(() {
+                    //
+                  });
+                }
+              ),
+            SizedBox(width: 16,),
+          ],
+        ),
         Consumer<CovidDataModel>(
           builder: (BuildContext context, _, __){
             if(model.isTimeSeriesDataReady) {
               return Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 child: Container(
                   decoration: BoxDecoration(
                       color: Colors.grey.shade800,
                       borderRadius: BorderRadius.circular(18)
                   ),
-                  margin: const EdgeInsets.all(8),
-                  padding: const EdgeInsets.all(12),
+                  margin: const EdgeInsets.all(4),
+                  padding: const EdgeInsets.all(4),
                   width: double.infinity,
                   height: 250,
                   child: Consumer<ChartSeriesDataProvider>(
@@ -153,7 +166,7 @@ class _CountryPageState extends State<CountryPage> {
               builder: (context, _, __){
                 return ChoiceChip(
                   selected: chartsData.index == 0,
-                  selectedColor: Colors.orange,
+                  selectedColor: Colors.deepOrange,
                   label: Text(
                     'Infection',
                     style: TextStyle(color: Colors.white),
