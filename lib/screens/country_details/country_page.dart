@@ -1,6 +1,7 @@
+import 'package:covid19_tracker/models/CountryCovidData.dart';
 import 'package:covid19_tracker/providers/ChartSeriesDataProvider.dart';
 import 'package:covid19_tracker/providers/CovidDataModel.dart';
-// import 'package:covid19_tracker/utils/ListUtils.dart';
+import 'package:covid19_tracker/widgets/LocationDropDownButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -16,13 +17,11 @@ class CountryPage extends StatefulWidget {
 
 class _CountryPageState extends State<CountryPage> {
 
-  List<String> _locations = ['India', 'US', "Canada"];
-  String _location;
-
   @override
   void initState() {
     super.initState();
-    Provider.of<CovidDataModel>(context, listen: false).fetchTimeSeriesData('india', 50);
+    Provider.of<CovidDataModel>(context, listen: false)..fetchTimeSeriesData('India', 50)
+                                                       ..fetchCountriesData();
   }
 
   List<charts.Series<SeriesData, DateTime>> buildSeriesList(CovidDataModel chartsData, int index) {
@@ -57,9 +56,10 @@ class _CountryPageState extends State<CountryPage> {
   Widget build(BuildContext context) {
     CovidDataModel model = Provider.of<CovidDataModel>(context, listen: false);
     ChartSeriesDataProvider chartsData = Provider.of<ChartSeriesDataProvider>(context, listen: false);
+    // List<String> countries = model.
     return Column(
       children: [
-        SizedBox(height: 8,),
+        SizedBox(height: 8),
         Row(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -70,29 +70,25 @@ class _CountryPageState extends State<CountryPage> {
                 fontSize: 24
               ),
             ),
-            Expanded(
-              flex: 2, child: Container(),
-            ),
-            DropdownButton(
-              icon: Icon(
-                Icons.location_on
-              ),
-              underline: SizedBox(),
-              dropdownColor: Colors.redAccent,
-              value: _location,
-              items: _locations.map(
-                      (String location) => DropdownMenuItem(
-                        value: location, child: Text(location)
-                      )
-              ).toList(),
-              onChanged: (String selectedLocation){
-                  _location = selectedLocation;
-                  setState(() {
-                    //
-                  });
+            Spacer(),
+            Consumer<CovidDataModel>(
+              builder: (context, _, __) {
+                if(model.isCountriesCovidDataReady){
+                  return LocationDropDownButton(
+                    countryFlagUris: model.countriesCovidDataList.map(
+                            (CountryCovidData data) => data.countryFlagUrl).toList(),
+                    countryNames: model.countriesCovidDataList.map(
+                            (dataset) => dataset.countryName).toList(),
+                      onSelected: (String country) {
+                        model.fetchTimeSeriesData(country, 50);
+                      }
+                  );
+                } else {
+                  return DummyDropdown();
                 }
-              ),
-            SizedBox(width: 16,),
+              }
+            ),
+            SizedBox(width: 12,),
           ],
         ),
         Consumer<CovidDataModel>(

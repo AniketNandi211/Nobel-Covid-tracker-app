@@ -152,7 +152,8 @@ class _SymptomsPageState extends State<SymptomsPage> {
                   } else {
                       // sort countries by most affected attribute
                     covidDataModel.countriesCovidDataList.sort(
-                        (a, b) => int.parse(b.totalConfirmed).compareTo(int.parse(a.totalConfirmed))
+                        (a, b) =>
+                            int.parse(b.totalConfirmed).compareTo(int.parse(a.totalConfirmed))
                     );
                     return ListView.builder(
                       shrinkWrap: true,   // to extent the list inside a column
