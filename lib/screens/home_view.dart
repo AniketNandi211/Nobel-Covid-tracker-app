@@ -1,7 +1,5 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:covid19_tracker/screens/country_details/country_page.dart';
-import 'package:covid19_tracker/screens/feeds_view/feed_page.dart';
-import 'package:covid19_tracker/screens/origin_page/history_page.dart';
 import 'package:covid19_tracker/screens/prevention_view/prevention_page.dart';
 import 'package:covid19_tracker/screens/symptoms_view/symptoms_page.dart';
 import 'package:flutter/material.dart';
@@ -32,30 +30,18 @@ class _HomeViewState extends State<HomeView> {
       activeColor: Colors.orange[800]
     ),
     BottomNavyBarItem(
-      icon: Icon(FontAwesomeIcons.globeAsia),
-      title: Text('Worldwide'),
-      inactiveColor: Colors.blue.withOpacity(0.6),
-      activeColor: Colors.blue
-    ),
-    BottomNavyBarItem(
       icon: Icon(FontAwesomeIcons.satelliteDish),
       title: Text('Prevention'),
       inactiveColor: Colors.red.withOpacity(0.6),
       activeColor: Colors.red
-    ),
-    BottomNavyBarItem(
-      icon: Icon(FontAwesomeIcons.history),
-      title: Text('Insights'),
-      inactiveColor: Colors.teal.withOpacity(0.6),
-      activeColor: Colors.teal
     ),
   ];
 
   @override
   void initState() {
     super.initState();
-    _currentPage = 2;
-    _pageController = PageController(initialPage: 2);
+    _currentPage = 0;
+    _pageController = PageController(initialPage: 0);
   }
 
   @override
@@ -78,9 +64,7 @@ class _HomeViewState extends State<HomeView> {
         children: <Widget>[
           SymptomsPage(),
           CountryPage(),
-          FeedPage(),
           PreventionPage(),
-          HistoryPage()
         ],
         onPageChanged: (index){
           setState(() {

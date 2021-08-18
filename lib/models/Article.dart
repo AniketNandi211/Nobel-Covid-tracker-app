@@ -36,7 +36,8 @@ class Article{
       title: jsonData['title'] ?? 'n/a',
       desc: jsonData['description'] ?? 'n/a',
       content: jsonData['content'] ?? 'n/a',
-      imgUrl: jsonData['urlToImage'] ?? 'n/a',
+      imgUrl: jsonData['urlToImage'] ??
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEVfVYFJqZgM8FatxGtbUUqkOjkLPxFYy9y43lB65Th8ZkJ9pif2TDK11kzy1heX9lDTs&usqp=CAU',
       pageUrl: jsonData['url'] ?? 'n/a',
       publishDate: jsonData['publishedAt' ?? 'n/a']
     );

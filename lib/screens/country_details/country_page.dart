@@ -20,7 +20,7 @@ class _CountryPageState extends State<CountryPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CovidDataModel>(context, listen: false)..fetchTimeSeriesData('India', 50)
+    Provider.of<CovidDataModel>(context, listen: false)..fetchTimeSeriesData('India', 90)
                                                        ..fetchCountriesData();
   }
 
@@ -67,7 +67,7 @@ class _CountryPageState extends State<CountryPage> {
             Text(
                 'Overview',
               style: TextStyle(
-                fontSize: 24
+                fontSize: 26
               ),
             ),
             Spacer(),
@@ -80,17 +80,20 @@ class _CountryPageState extends State<CountryPage> {
                     countryNames: model.countriesCovidDataList.map(
                             (dataset) => dataset.countryName).toList(),
                       onSelected: (String country) {
-                        model.fetchTimeSeriesData(country, 50);
+                        model.refreshTimeSeriesData(country, 90);
                       }
                   );
                 } else {
-                  return DummyDropdown();
+                  return DummyDropdown(
+                    hint: 'Getting data',
+                  );
                 }
               }
             ),
             SizedBox(width: 12,),
           ],
         ),
+        SizedBox(height: 8,),
         Consumer<CovidDataModel>(
           builder: (BuildContext context, _, __){
             if(model.isTimeSeriesDataReady) {
@@ -190,23 +193,33 @@ class _CountryPageState extends State<CountryPage> {
               },
             ),
             SizedBox(width: 12,),
-            Consumer<ChartSeriesDataProvider>(
-              builder: (context, _, __){
-                return ChoiceChip(
-                  selected: chartsData.index == 2,
-                  selectedColor: Colors.green,
-                  label: Text(
-                    'Recovery',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onSelected: (bool selected){
-                    chartsData.updateDataIndex(2);
-                  },
-                );
-              },
-            ),
+            // Consumer<ChartSeriesDataProvider>(
+            //   builder: (context, _, __){
+            //     return ChoiceChip(
+            //       selected: chartsData.index == 2,
+            //       selectedColor: Colors.green,
+            //       label: Text(
+            //         'Recovery',
+            //         style: TextStyle(color: Colors.white),
+            //       ),
+            //       onSelected: (bool selected){
+            //         chartsData.updateDataIndex(2);
+            //       },
+            //     );
+            //   },
+            // ),
           ],
-        )
+        ),
+        SizedBox(height: 8,),
+        Align(
+          alignment: Alignment(-0.92, 0),
+            child: Text(
+                'At a glace',
+              style: TextStyle(
+                fontSize: 22,
+              ),
+            )
+        ),
         // clips row widget
       ],
     );

@@ -69,13 +69,15 @@ class _LocationDropDownButtonState extends State<LocationDropDownButton> {
                 flex: 1,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(flagUrl)
+                  child: Image.network(
+                    flagUrl,
+                    width: 45,
+                    height: 30,
+                    fit: BoxFit.fill,
+                  )
                 )
               ),
-              Expanded(
-                flex: 1,
-                child: Container(),
-              ),
+              SizedBox(width: 12,),
               Expanded(
                 flex: 2,
                 child: Text(
@@ -153,7 +155,7 @@ class _LocationDropDownButtonState extends State<LocationDropDownButton> {
               child: Text(
                 _currentLocation,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold
                 ),
                 overflow: TextOverflow.ellipsis,
@@ -170,7 +172,13 @@ class _LocationDropDownButtonState extends State<LocationDropDownButton> {
 }
 
 class DummyDropdown extends StatelessWidget {
-  const DummyDropdown({Key key}) : super(key: key);
+
+  final String hint;
+
+  const DummyDropdown(
+      {Key key,
+       @required this.hint
+      }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +195,7 @@ class DummyDropdown extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Text(
-                'Searching ... ',
+                hint,
                 style: TextStyle(
                     fontSize: 14
                 ),

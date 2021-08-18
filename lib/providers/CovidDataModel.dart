@@ -178,7 +178,7 @@ class CovidDataModel extends ChangeNotifier {
   }
 
   // ignore: missing_return
-  Future<CountryCovidTimeSeriesData> _timeSeriesData(String country, int days) async{
+  Future<CountryCovidTimeSeriesData> _timeSeriesData(String country, int days) async {
     _fails = null;
     try {
       Map<String, dynamic> countryCovidData = await CovidService.getCountryTimeSeriesData(
