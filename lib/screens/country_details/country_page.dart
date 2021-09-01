@@ -19,12 +19,14 @@ class CountryPage extends StatefulWidget {
 class _CountryPageState extends State<CountryPage> {
 
   String countryName = 'India'; // initial name of country
+  int days; // time series data in days
 
   @override
   void initState() {
     super.initState();
     countryName = 'India';
-    Provider.of<CovidDataModel>(context, listen: false)..fetchTimeSeriesData('India', 90)
+    days = 180;
+    Provider.of<CovidDataModel>(context, listen: false)..fetchTimeSeriesData('India', days)
                                                        ..fetchCountriesData();
   }
 
@@ -75,9 +77,7 @@ class _CountryPageState extends State<CountryPage> {
             SizedBox(width: 12,),
             Text(
                 'Overview',
-              style: TextStyle(
-                fontSize: 26
-              ),
+              style: Theme.of(context).primaryTextTheme.headline5,
             ),
             Spacer(),
             Consumer<CovidDataModel>(
@@ -89,7 +89,7 @@ class _CountryPageState extends State<CountryPage> {
                     countryNames: model.countriesCovidDataList.map(
                             (dataset) => dataset.countryName).toList(),
                       onSelected: (String country) {
-                        model.refreshTimeSeriesData(country, 90);
+                        model.refreshTimeSeriesData(country, days);
                         countryName = country;
                       }
                   );
@@ -227,9 +227,7 @@ class _CountryPageState extends State<CountryPage> {
           alignment: Alignment(-0.92, 0),
             child: Text(
                 'Summary',
-              style: TextStyle(
-                fontSize: 22,
-              ),
+              style: Theme.of(context).primaryTextTheme.headline5,
             )
         ),
         Consumer<CovidDataModel>(
@@ -268,10 +266,7 @@ class _CountryPageState extends State<CountryPage> {
                         SizedBox(width: 30,),
                         Text(
                           '${model.countryTimeSeriesData.country}',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold
-                          ),
+                          style: Theme.of(context).primaryTextTheme.headline3,
                         ),
                       ],
                     ),
@@ -293,8 +288,10 @@ class _CountryPageState extends State<CountryPage> {
                         ),),
                       ],
                     ),
-                    Text('A maximum of ${deathPercent.toStringAsFixed(0)}% hike'
-                        ' in death cases over 3 months')
+                    Text('${deathPercent.toStringAsFixed(0)}% death hike'
+                        ' over past ${(days/30).toStringAsFixed(0)} months'),
+                    Text('${infectionPercent.toStringAsFixed(0)}% rise in'
+                        'infection rate in ${(days/30).toStringAsFixed(0)} months'),
                   ],
                 );
               }
