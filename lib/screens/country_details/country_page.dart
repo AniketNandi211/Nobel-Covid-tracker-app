@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:covid19_tracker/models/CountryCovidData.dart';
 import 'package:covid19_tracker/providers/ChartSeriesDataProvider.dart';
 import 'package:covid19_tracker/providers/CovidDataModel.dart';
@@ -51,12 +52,18 @@ class _CountryPageState extends State<CountryPage> {
     ];
   }
 
+  /// calculates the percentage increase or decrease between
+  /// starting and final value
+  double percentageHike({int initialValue, int finalValue}) {
+    return ((finalValue - initialValue)/initialValue) * 100;
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    String countryName = 'India'; // index of country
     CovidDataModel model = Provider.of<CovidDataModel>(context, listen: false);
     ChartSeriesDataProvider chartsData = Provider.of<ChartSeriesDataProvider>(context, listen: false);
-    // List<String> countries = model.
     return Column(
       children: [
         SizedBox(height: 8),
@@ -81,6 +88,7 @@ class _CountryPageState extends State<CountryPage> {
                             (dataset) => dataset.countryName).toList(),
                       onSelected: (String country) {
                         model.refreshTimeSeriesData(country, 90);
+                        countryName = country;
                       }
                   );
                 } else {
@@ -97,6 +105,8 @@ class _CountryPageState extends State<CountryPage> {
         Consumer<CovidDataModel>(
           builder: (BuildContext context, _, __){
             if(model.isTimeSeriesDataReady) {
+              // countryIndex = model.countriesCovidDataList.indexWhere(
+              //         (country) => country.countryName == 'india');
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 child: Container(
@@ -214,13 +224,82 @@ class _CountryPageState extends State<CountryPage> {
         Align(
           alignment: Alignment(-0.92, 0),
             child: Text(
-                'At a glace',
+                'Summary',
               style: TextStyle(
                 fontSize: 22,
               ),
             )
         ),
-        // clips row widget
+        Consumer<CovidDataModel>(
+            builder: (context, _, __) {
+              int countryIndex = model.countriesCovidDataList.indexWhere(
+                      (country) => country.countryName == countryName);
+              if(model.isTimeSeriesDataReady){
+                List<int> deathSeries = model.countryTimeSeriesData.deathSeries.map(
+                        (SeriesData data) => data.caseCount).toList();
+                List<int> infectionSeries = model.countryTimeSeriesData.infectionSeries.map(
+                        (SeriesData data) => data.caseCount).toList();
+                // percentage +/-
+                int deathSeriesMax = deathSeries.reduce(max);
+                int deathSeriesMin = deathSeries.reduce(min);
+                int infectionSeriesMax = infectionSeries.reduce(max);
+                int infectionSeriesMin = infectionSeries.reduce(min);
+                return Column(
+                  children: [
+                    SizedBox(height: 12,),
+                    Row(
+                      children: [
+                        SizedBox(width: 18,),
+                        ClipRRect(
+                          child: Image.network(
+                            model.countriesCovidDataList[countryIndex].countryFlagUrl,
+                            fit: BoxFit.cover,
+                            height: 65,
+                            width: 95,
+                          ),
+                          borderRadius: BorderRadius.circular(26),
+                        ),
+                        SizedBox(width: 30,),
+                        Text(
+                          '${model.countryTimeSeriesData.country}',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text('${
+                            NumberFormat.compact().format(infectionSeries[infectionSeries.length-1])
+                        } Infections nation-wide',
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          fontSize: 16
+                        ),),
+                        Text('${
+                            NumberFormat.compact().format(deathSeries[deathSeries.length-1])
+                        } Deaths',
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            fontSize: 16
+                        ),),
+                      ],
+                    ),
+                    Text(''
+                        '${percentageHike(initialValue: deathSeriesMin, finalValue: deathSeriesMax)
+                            .toStringAsFixed(2)}'
+                        '%')
+                  ],
+                );
+              }
+              return Container(
+                height: 250,
+                child: Center(child: CircularProgressIndicator(),),
+              );
+            }
+        )
       ],
     );
   }
