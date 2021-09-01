@@ -18,9 +18,12 @@ class CountryPage extends StatefulWidget {
 
 class _CountryPageState extends State<CountryPage> {
 
+  String countryName = 'India'; // initial name of country
+
   @override
   void initState() {
     super.initState();
+    countryName = 'India';
     Provider.of<CovidDataModel>(context, listen: false)..fetchTimeSeriesData('India', 90)
                                                        ..fetchCountriesData();
   }
@@ -61,7 +64,6 @@ class _CountryPageState extends State<CountryPage> {
 
   @override
   Widget build(BuildContext context) {
-    String countryName = 'India'; // index of country
     CovidDataModel model = Provider.of<CovidDataModel>(context, listen: false);
     ChartSeriesDataProvider chartsData = Provider.of<ChartSeriesDataProvider>(context, listen: false);
     return Column(
@@ -240,10 +242,14 @@ class _CountryPageState extends State<CountryPage> {
                 List<int> infectionSeries = model.countryTimeSeriesData.infectionSeries.map(
                         (SeriesData data) => data.caseCount).toList();
                 // percentage +/-
-                int deathSeriesMax = deathSeries.reduce(max);
-                int deathSeriesMin = deathSeries.reduce(min);
-                int infectionSeriesMax = infectionSeries.reduce(max);
-                int infectionSeriesMin = infectionSeries.reduce(min);
+                double deathPercent = percentageHike(
+                  initialValue: deathSeries.reduce(min),
+                  finalValue: deathSeries.reduce(max)
+                );
+                double infectionPercent = percentageHike(
+                  initialValue: infectionSeries.reduce(min),
+                  finalValue: infectionSeries.reduce(max)
+                );
                 return Column(
                   children: [
                     SizedBox(height: 12,),
@@ -287,10 +293,8 @@ class _CountryPageState extends State<CountryPage> {
                         ),),
                       ],
                     ),
-                    Text(''
-                        '${percentageHike(initialValue: deathSeriesMin, finalValue: deathSeriesMax)
-                            .toStringAsFixed(2)}'
-                        '%')
+                    Text('A maximum of ${deathPercent.toStringAsFixed(0)}% hike'
+                        ' in death cases over 3 months')
                   ],
                 );
               }
