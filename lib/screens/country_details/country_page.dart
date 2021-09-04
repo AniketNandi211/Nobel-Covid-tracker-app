@@ -270,7 +270,7 @@ class _CountryPageState extends State<CountryPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 15,),
+                    SizedBox(height: 18,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -288,6 +288,7 @@ class _CountryPageState extends State<CountryPage> {
                         ),),
                       ],
                     ),
+                    SizedBox(height: 16,),
                     Text('${deathPercent.toStringAsFixed(0)}% death hike'
                         ' over past ${(days/30).toStringAsFixed(0)} months'),
                     Text('${infectionPercent.toStringAsFixed(0)}% rise in'
