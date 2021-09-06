@@ -57,12 +57,39 @@ class _CountryPageState extends State<CountryPage> {
     ];
   }
 
+  // widget for displaying individual data analytics
+  Widget analyticsInfo({int data, String textInfo = 'dummy text', Color color = Colors.teal}) {
+    TextStyle textStyle = Theme.of(context).primaryTextTheme.bodyText1.copyWith(
+      fontSize: 16
+    );
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      child: Row(
+        children: [
+          // circle pointer
+          Container(
+            height: 12,
+            width: 12,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(6)
+            ),
+          ),
+          SizedBox(width: 12,),
+          Text(
+              '$data$textInfo ${(days/30).toStringAsFixed(0)} months',
+            style: textStyle,
+          ),
+        ],
+      ),
+    );
+  }
+
   /// calculates the percentage increase or decrease between
   /// starting and final value
   double percentageHike({int initialValue, int finalValue}) {
     return ((finalValue - initialValue)/initialValue) * 100;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -232,6 +259,9 @@ class _CountryPageState extends State<CountryPage> {
         ),
         Consumer<CovidDataModel>(
             builder: (context, _, __) {
+              TextStyle basicTextStyle = Theme.of(context).primaryTextTheme.bodyText1.copyWith(
+                fontSize: 16
+              );
               int countryIndex = model.countriesCovidDataList.indexWhere(
                       (country) => country.countryName == countryName);
               if(model.isTimeSeriesDataReady){
@@ -271,28 +301,48 @@ class _CountryPageState extends State<CountryPage> {
                       ],
                     ),
                     SizedBox(height: 18,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text('${
-                            NumberFormat.compact().format(infectionSeries[infectionSeries.length-1])
-                        } Infections nation-wide',
-                        style: Theme.of(context).textTheme.bodyText1.copyWith(
-                          fontSize: 16
-                        ),),
-                        Text('${
-                            NumberFormat.compact().format(deathSeries[deathSeries.length-1])
-                        } Deaths',
-                        style: Theme.of(context).textTheme.bodyText1.copyWith(
-                            fontSize: 16
-                        ),),
-                      ],
+                    Container(
+                      child: RichText(
+                        text: TextSpan(
+                          style: basicTextStyle,
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: '${NumberFormat.compactLong().format(infectionSeries[infectionSeries.length-1])}'
+                                  ' infections',
+                              style: basicTextStyle.copyWith(
+                                color: Colors.greenAccent,
+                                fontWeight: FontWeight.bold
+                              )
+                            ),
+                            TextSpan(
+                              text: ' nation-wide with a total of ',
+                              style: basicTextStyle
+                            ),
+                            TextSpan(
+                              text: '${NumberFormat.compactLong().format(deathSeries[deathSeries.length-1])}'
+                                  ' deaths.',
+                              style: basicTextStyle.copyWith(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold
+                              )
+                            )
+                          ]
+                        ),
+                      ),
+                      padding:  const EdgeInsets.symmetric(horizontal: 8),
                     ),
                     SizedBox(height: 16,),
-                    Text('${deathPercent.toStringAsFixed(0)}% death hike'
-                        ' over past ${(days/30).toStringAsFixed(0)} months'),
-                    Text('${infectionPercent.toStringAsFixed(0)}% rise in'
-                        'infection rate in ${(days/30).toStringAsFixed(0)} months'),
+                    analyticsInfo(
+                      color: Colors.deepOrange,
+                      textInfo: '% death hike over the past ',
+                      data: int.parse(deathPercent.toStringAsFixed(0))
+                    ),
+                    SizedBox(height: 8,),
+                    analyticsInfo(
+                        color: Colors.teal,
+                        textInfo: '% rise in infection for past ',
+                        data: int.parse(infectionPercent.toStringAsFixed(0))
+                    ),
                   ],
                 );
               }

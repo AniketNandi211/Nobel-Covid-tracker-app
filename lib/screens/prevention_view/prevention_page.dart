@@ -6,6 +6,7 @@ class PreventionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         itemCount: CovidQueries.queries.length,
+        physics: BouncingScrollPhysics(),
         itemBuilder: (BuildContext ctx, int index) {
           return
             Container(
