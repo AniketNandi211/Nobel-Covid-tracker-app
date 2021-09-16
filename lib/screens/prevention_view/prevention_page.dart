@@ -11,18 +11,16 @@ class PreventionPage extends StatelessWidget {
           return
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              margin: const EdgeInsets.only(bottom: 50),
+              margin: const EdgeInsets.only(bottom: 45),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('${CovidQueries.queries[index].question}',
-                      style: Theme.of(context).primaryTextTheme.headline4,
+                      style: Theme.of(context).primaryTextTheme.headline4
                     ),
                     SizedBox(height: 12,),
                     Text('${CovidQueries.queries[index].answer}',
-                      style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(
-                        fontSize: 16
-                      ),
+                      style: Theme.of(context).primaryTextTheme.bodyText1
                     ),
                   ],
                 ),

@@ -24,26 +24,20 @@ class GlobalCovidCard extends StatelessWidget {
               children: [
                 Icon(
                   MdiIcons.earthPlus,
-                  color: Colors.lightBlueAccent,
+                  color: Color(0xff1cc5dc),
                   size: 36.0,
                 ),
                 SizedBox(width: 6.0,),
                 Text(
                   NumberScaleFormatter.adjustScaling(globalCovidData.totalConfirmed),
-                  style: TextStyle(
-                      fontSize: 26.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.lightBlueAccent
-                  ),
+                  style: Theme.of(context).primaryTextTheme.headline4.copyWith(
+                    color: Color(0xff1cc5dc)
+                  )
                 ),
                 SizedBox(width: 4.0,),
                 Text(
                   'active cases worldwide',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.lightBlueAccent
-                  ),
+                  style: Theme.of(context).primaryTextTheme.caption
                 )
               ],
             ),
@@ -58,7 +52,7 @@ class GlobalCovidCard extends StatelessWidget {
                 totalNumberInfo: NumberScaleFormatter.adjustScaling(globalCovidData.totalRecovery),
                 dailyNumberInfo: NumberScaleFormatter.adjustScaling(globalCovidData.dailyRecovery),
                 icon: MdiIcons.heartPlusOutline,
-                cardColor: Colors.green,
+                cardColor: Colors.lightBlue,
               ),
               GlobalCovidStatViewer(
                 statName: 'Deceased',
@@ -68,10 +62,10 @@ class GlobalCovidCard extends StatelessWidget {
                 cardColor: Colors.red,
               ),
              GlobalCovidStatViewer(
-               statName: 'Being treated',
+               statName: 'Pending',
                totalNumberInfo: NumberScaleFormatter.adjustScaling(globalCovidData.activeCases),
                dailyNumberInfo: NumberScaleFormatter.adjustScaling(globalCovidData.dailyConfirmed),
-               cardColor : Colors.orange,
+               cardColor : Colors.deepOrange,
                icon: MdiIcons.bottleTonicPlusOutline,
              ),
             ],

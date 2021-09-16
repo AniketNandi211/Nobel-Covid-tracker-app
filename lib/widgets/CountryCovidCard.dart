@@ -52,9 +52,7 @@ class CountryCovidCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     textDirection: TextDirection.ltr,
                     maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 26,
-                    ),
+                    style: Theme.of(context).primaryTextTheme.headline5
                   ),
                 ),
                 Spacer(),
@@ -81,10 +79,7 @@ class CountryCovidCard extends StatelessWidget {
               columns: [
                 DataColumn(
                   label: Text('Attributes',
-                    style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic
-                    ),
+                    style: Theme.of(context).primaryTextTheme.bodyText2
                   )
                   ,),
                 // DataColumn(label: Icon(MdiIcons.abTesting, color: Colors.blue,),),
@@ -98,18 +93,12 @@ class CountryCovidCard extends StatelessWidget {
                 // ),
                 DataColumn(
                     label: Text('Total',
-                      style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic
-                      ),
+                      style: Theme.of(context).primaryTextTheme.bodyText2
                     )
                   ,),
                 DataColumn(
                   label: Text('Daily',
-                    style: Theme.of(context).primaryTextTheme.bodyText1.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic
-                    ),
+                    style: Theme.of(context).primaryTextTheme.bodyText2
                   )
                   ,),
                 //DataColumn(label: Text('Daily')),,
@@ -118,48 +107,54 @@ class CountryCovidCard extends StatelessWidget {
                 DataRow(
                   cells: [
                     DataCell(
-                        Icon(MdiIcons.heartPlusOutline, color: Colors.green,size: 28,),
+                        Icon(MdiIcons.heartPlusOutline, color: Color(0xff28ffbf),size: 28,),
                     ),
                     // DataCell(
                     //   Text('Recovery'),
                     // ),
                     DataCell(
-                      Text(NumberScaleFormatter.adjustScaling(countryCovidData.totalRecovery)),
+                      Text(NumberScaleFormatter.adjustScaling(countryCovidData.totalRecovery),
+                        style: Theme.of(context).primaryTextTheme.caption,),
                     ),
                     DataCell(
-                      Text(NumberScaleFormatter.adjustScaling(countryCovidData.dailyRecovery)),
+                      Text(NumberScaleFormatter.adjustScaling(countryCovidData.dailyRecovery),
+                        style: Theme.of(context).primaryTextTheme.caption,),
                     ),
                   ],
                 ),
                 DataRow(
                     cells: [
                       DataCell(
-                        Icon(MdiIcons.emoticonDeadOutline, color: Colors.red,size: 28,),
+                        Icon(MdiIcons.emoticonDeadOutline, color: Color(0xfffa1635),size: 28,),
                       ),
                       // DataCell(
                       //   Text('Deaths'),
                       // ),
                       DataCell(
-                        Text(NumberScaleFormatter.adjustScaling(countryCovidData.totalDeath)),
+                        Text(NumberScaleFormatter.adjustScaling(countryCovidData.totalDeath),
+                          style: Theme.of(context).primaryTextTheme.caption,),
                       ),
                       DataCell(
-                        Text(NumberScaleFormatter.adjustScaling(countryCovidData.dailyDeath)),
+                        Text(NumberScaleFormatter.adjustScaling(countryCovidData.dailyDeath),
+                          style: Theme.of(context).primaryTextTheme.caption,),
                       ),
                     ],
                 ),
                 DataRow(
                   cells: [
                     DataCell(
-                      Icon(MdiIcons.virusOutline, color: Colors.teal,size: 28,),
+                      Icon(MdiIcons.virusOutline, color: Color(0xff6807fa),size: 28,),
                     ),
                     // DataCell(
                     //   Text('Affected',),
                     // ),
                     DataCell(
-                      Text(NumberScaleFormatter.adjustScaling(countryCovidData.totalConfirmed)),
+                      Text(NumberScaleFormatter.adjustScaling(countryCovidData.totalConfirmed),
+                        style: Theme.of(context).primaryTextTheme.caption,),
                     ),
                     DataCell(
-                      Text(NumberScaleFormatter.adjustScaling(countryCovidData.dailyConfirmed)),
+                      Text(NumberScaleFormatter.adjustScaling(countryCovidData.dailyConfirmed),
+                        style: Theme.of(context).primaryTextTheme.caption,),
                     ),
                   ],
                 ),

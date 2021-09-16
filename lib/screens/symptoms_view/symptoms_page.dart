@@ -135,7 +135,7 @@ class _SymptomsPageState extends State<SymptomsPage> {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 'Most affected countries',
-                style: Theme.of(context).primaryTextTheme.headline6,
+                style: Theme.of(context).primaryTextTheme.headline4,
               ),
             ),
             Container(

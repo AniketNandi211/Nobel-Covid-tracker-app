@@ -8,8 +8,8 @@ class NumberScaleFormatter {
   static Map<int, String> _numberIdentityMap = {
     1 : '',
     4 : 'K',
-    7 : 'Million',
-    10 : 'Billion'
+    7 : ' Million',
+    10 : ' Billion'
   };
 
   static double _toScaledDouble(String number, {@required int factor}) => int.parse(number)/math.pow(10, factor);

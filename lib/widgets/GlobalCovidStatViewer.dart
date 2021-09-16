@@ -51,27 +51,19 @@ class GlobalCovidStatViewer extends StatelessWidget {
             SizedBox(height: 8.0,),
             Text(
               totalNumberInfo,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.0,
-                fontSize: 16.0,
-              ),
+              style: Theme.of(context).primaryTextTheme.bodyText2
             ),
             SizedBox(height: 4.0,),
             Text(
               '(+$dailyNumberInfo today)',
-                style: TextStyle(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold,
+                style: Theme.of(context).primaryTextTheme.caption.copyWith(
+                  fontSize: 14
                 )
             ),
             SizedBox(height: 4.0,),
             Text(
               statName,
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).primaryTextTheme.bodyText2
             ),
           ],
         ),

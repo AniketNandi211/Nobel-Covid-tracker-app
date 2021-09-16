@@ -83,6 +83,7 @@ class _LocationDropDownButtonState extends State<LocationDropDownButton> {
                 child: Text(
                     location,
                   maxLines: 1,
+                  style: Theme.of(context).primaryTextTheme.bodyText2,
                   overflow: TextOverflow.ellipsis,
                 )
               ),
@@ -154,10 +155,7 @@ class _LocationDropDownButtonState extends State<LocationDropDownButton> {
               flex: 3,
               child: Text(
                 _currentLocation,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold
-                ),
+                style: Theme.of(context).primaryTextTheme.bodyText2,
                 overflow: TextOverflow.ellipsis,
               ),
             ),

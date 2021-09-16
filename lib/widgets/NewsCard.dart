@@ -86,7 +86,9 @@ class NewsCard extends StatelessWidget {
                           color: Colors.transparent,
                           child: Text(
                             article.title,
-                            style: TextStyle(fontSize: 20),
+                            style: Theme.of(context).primaryTextTheme.bodyText2.copyWith(
+                              fontSize: 22
+                            ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -101,7 +103,8 @@ class NewsCard extends StatelessWidget {
                             child: Material(
                               color: Colors.transparent,
                               child: Text(
-                                  article.publishDate
+                                  article.publishDate,
+                                style: Theme.of(context).primaryTextTheme.caption,
                               ),
                             ),
                           ),
@@ -121,6 +124,7 @@ class NewsCard extends StatelessWidget {
                               color: Colors.transparent,
                               child: Text(
                                   article.sourceName,
+                                style: Theme.of(context).primaryTextTheme.bodyText2,
                               ),
                             ),
                           ),
