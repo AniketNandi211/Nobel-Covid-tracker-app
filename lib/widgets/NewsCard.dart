@@ -1,6 +1,7 @@
 import 'package:covid19_tracker/models/Article.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 ///
 /// previous design for news card
@@ -50,6 +51,18 @@ class NewsCard extends StatelessWidget {
 
   final Article article;
   final int index;
+  final DateFormat timingFormat = DateFormat.jm();
+  final DateFormat dateFormat = DateFormat.yMMMd();
+
+  String _dateFormat(String dateString){
+    DateTime date = DateTime.parse(dateString);
+    DateTime curr = DateTime.now();
+    if(curr.year == date.year && date.day == curr.day && curr.month == date.month) {
+      return "Today ${timingFormat.format(date)}";
+    } else {
+      return dateFormat.format(date);
+    }
+  }
 
   NewsCard({@required this.article, @required this.index});
 
@@ -103,7 +116,7 @@ class NewsCard extends StatelessWidget {
                             child: Material(
                               color: Colors.transparent,
                               child: Text(
-                                  article.publishDate,
+                                  _dateFormat(article.publishDate),
                                 style: Theme.of(context).primaryTextTheme.caption,
                               ),
                             ),

@@ -206,10 +206,10 @@ class _CountryPageState extends State<CountryPage> {
                 builder: (context, _, __){
                   return ChoiceChip(
                     selected: chartsData.index == 0,
-                    selectedColor: Colors.deepOrange,
+                    selectedColor: Color(0xff170055),
                     label: Text(
                       'Infection',
-                      style: Theme.of(context).primaryTextTheme.caption,
+                      style: Theme.of(context).primaryTextTheme.bodyText1,
                     ),
                     onSelected: (bool selected){
                       chartsData.updateDataIndex(0);
@@ -222,10 +222,10 @@ class _CountryPageState extends State<CountryPage> {
                 builder: (context, _, __){
                   return ChoiceChip(
                     selected: chartsData.index == 1,
-                    selectedColor: Colors.redAccent,
+                    selectedColor: Color(0xffff2442),
                     label: Text(
                       'Deaths',
-                      style: Theme.of(context).primaryTextTheme.caption,
+                      style: Theme.of(context).primaryTextTheme.bodyText1,
                     ),
                     onSelected: (bool selected){
                       chartsData.updateDataIndex(1);
@@ -310,7 +310,7 @@ class _CountryPageState extends State<CountryPage> {
                                 text: '${NumberFormat.compactLong().format(infectionSeries[infectionSeries.length-1])}'
                                     ' infections',
                                 style: basicTextStyle.copyWith(
-                                  color: Colors.greenAccent,
+                                  color: Color(0xff28FFBF),
                                   fontWeight: FontWeight.bold
                                 )
                               ),
@@ -322,7 +322,7 @@ class _CountryPageState extends State<CountryPage> {
                                 text: '${NumberFormat.compactLong().format(deathSeries[deathSeries.length-1])}'
                                     ' deaths.',
                                 style: basicTextStyle.copyWith(
-                                  color: Colors.redAccent,
+                                  color: Color(0xffff2442),
                                   fontWeight: FontWeight.bold
                                 )
                               )
@@ -333,13 +333,13 @@ class _CountryPageState extends State<CountryPage> {
                       ),
                       SizedBox(height: 16,),
                       analyticsInfo(
-                        color: Colors.deepOrange,
+                        color: Color(0xffff2442),
                         textInfo: '% death hike over the past ',
                         data: int.parse(deathPercent.toStringAsFixed(0))
                       ),
                       SizedBox(height: 8,),
                       analyticsInfo(
-                          color: Colors.teal,
+                          color: Color(0xff170055),
                           textInfo: '% rise in infection for past ',
                           data: int.parse(infectionPercent.toStringAsFixed(0))
                       ),

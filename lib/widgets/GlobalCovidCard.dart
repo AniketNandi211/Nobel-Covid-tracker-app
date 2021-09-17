@@ -37,7 +37,7 @@ class GlobalCovidCard extends StatelessWidget {
                 SizedBox(width: 4.0,),
                 Text(
                   'active cases worldwide',
-                  style: Theme.of(context).primaryTextTheme.caption
+                  style: Theme.of(context).primaryTextTheme.bodyText2
                 )
               ],
             ),

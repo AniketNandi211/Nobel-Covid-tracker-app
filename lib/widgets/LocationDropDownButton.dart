@@ -17,27 +17,40 @@ class LocationDropDownButton extends StatefulWidget {
   _LocationDropDownButtonState createState() => _LocationDropDownButtonState();
 }
 
-class _LocationDropDownButtonState extends State<LocationDropDownButton> {
+class _LocationDropDownButtonState extends State<LocationDropDownButton>
+    with SingleTickerProviderStateMixin {
 
   bool isOpen;
   final String keyName = 'dropdown';
   GlobalKey labelKey;
   double height, width, x, y;
   OverlayEntry overlay;
+  AnimationController _animationController;
+  Animation<double> _fadeAnimation;
 
   String _currentLocation;
 
   @override
   void initState() {
     isOpen = false;
+    _animationController = AnimationController(
+      duration: Duration(milliseconds: 350),
+      reverseDuration: Duration(milliseconds: 280),
+      vsync: this,
+    );
+    _fadeAnimation = Tween<double>(
+      begin: 0.0, end: 1.0
+    ).animate(_animationController);
     labelKey = LabeledGlobalKey(keyName);
     _currentLocation = 'India';
+    height = width = 0;
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+    _animationController.dispose();
   }
 
   void _loadDropDownSemantics(){
@@ -106,18 +119,21 @@ class _LocationDropDownButtonState extends State<LocationDropDownButton> {
             width: width + dropdownWidthExtent,
             child: Material(
               color: Colors.transparent,
-              child: Container(
-                height: 350,
-                decoration: BoxDecoration(
-                  color: Colors.teal[800],
-                  borderRadius: BorderRadius.circular(8)
-                ),
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: locations.length,
-                    itemBuilder: (BuildContext ctx, int index) {
-                      return _buildDropdownItem(locations[index], flags[index]);
-                    }
+              child: ScaleTransition(
+                scale: _fadeAnimation,
+                child: Container(
+                  height: 350,
+                  decoration: BoxDecoration(
+                    color: Color(0xff38A3A5),
+                    borderRadius: BorderRadius.circular(8)
+                  ),
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: locations.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        return _buildDropdownItem(locations[index], flags[index]);
+                      }
+                  ),
                 ),
               ),
             )
@@ -133,10 +149,12 @@ class _LocationDropDownButtonState extends State<LocationDropDownButton> {
       // gesture handler
       onTap: () {
         if(isOpen) {
+          _animationController.reverse();
           overlay.remove();
         } else {
           _loadDropDownSemantics();
           overlay = _buildDropDown(widget.countryNames, widget.countryFlagUris);
+          _animationController.forward();
           Overlay.of(context).insert(overlay);
         }
         isOpen = !isOpen;
@@ -144,7 +162,7 @@ class _LocationDropDownButtonState extends State<LocationDropDownButton> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
         decoration: BoxDecoration(
-          color: Colors.teal,
+          color: Color(0xff38A3A5),
           borderRadius: BorderRadius.circular(12),
         ),
         width: 120,

@@ -125,7 +125,8 @@ class CountryCovidCard extends StatelessWidget {
                 DataRow(
                     cells: [
                       DataCell(
-                        Icon(MdiIcons.emoticonDeadOutline, color: Color(0xfffa1635),size: 28,),
+                        Icon(MdiIcons.emoticonDeadOutline, color: Color(
+                            0xfffa1635),size: 28,),
                       ),
                       // DataCell(
                       //   Text('Deaths'),
@@ -143,7 +144,7 @@ class CountryCovidCard extends StatelessWidget {
                 DataRow(
                   cells: [
                     DataCell(
-                      Icon(MdiIcons.virusOutline, color: Color(0xff6807fa),size: 28,),
+                      Icon(MdiIcons.virusOutline, color: Color(0xff002272),size: 28,),
                     ),
                     // DataCell(
                     //   Text('Affected',),

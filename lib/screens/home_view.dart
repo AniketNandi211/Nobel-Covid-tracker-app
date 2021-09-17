@@ -18,22 +18,22 @@ class _HomeViewState extends State<HomeView> {
 
   final List<BottomNavyBarItem> bottomNavBarItems = [
     BottomNavyBarItem(
-      icon: Icon(FontAwesomeIcons.virus),
-      title: Text('Feeds'),
-      inactiveColor: Colors.green[600].withOpacity(0.6),
-      activeColor: Colors.green[600]
+      icon: Icon(FontAwesomeIcons.eye),
+      title: Text(' At a glance'),
+      inactiveColor: Color(0xff28FFBF),
+      activeColor: Color(0xff28FFBF)
     ),
     BottomNavyBarItem(
-      icon: Icon(FontAwesomeIcons.building),
-      title: Text('CountryWise'),
-      inactiveColor: Colors.orange[800].withOpacity(0.6),
-      activeColor: Colors.orange[800]
+      icon: Icon(FontAwesomeIcons.chartLine),
+      title: Text(' Overview'),
+      inactiveColor: Color(0xff3DB2FF),
+      activeColor: Color(0xff3DB2FF)
     ),
     BottomNavyBarItem(
-      icon: Icon(FontAwesomeIcons.satelliteDish),
-      title: Text('Prevention'),
-      inactiveColor: Colors.red.withOpacity(0.6),
-      activeColor: Colors.red
+      icon: Icon(FontAwesomeIcons.questionCircle),
+      title: Text(' FAQ'),
+      inactiveColor: Color(0xff00A19D),
+      activeColor: Color(0xff00A19D)
     ),
   ];
 
